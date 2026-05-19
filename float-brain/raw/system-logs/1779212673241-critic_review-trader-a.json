@@ -1,0 +1,15 @@
+{
+  "type": "critic_review",
+  "agentId": "trader-a",
+  "timestamp": "2026-05-19T17:44:33.241Z",
+  "data": {
+    "version": 9,
+    "finding": "The agent's high-frequency park actions are reducing capital efficiency due to repeated small transfers.",
+    "suggestedChanges": {
+      "cooldownAfterParkSeconds": 720
+    },
+    "confidence": "medium",
+    "reasoning": "Although this change was previously suggested and produced a worse outcome in v6, the current strategy version history indicates a continued aggressive recallOnVolatilitySpike behavior, leading to repeated transactions. A longer cooldown period after parks will help mitigate this issue, increasing capital efficiency."
+  },
+  "_compiled": true
+}

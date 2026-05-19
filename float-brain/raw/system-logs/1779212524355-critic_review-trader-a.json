@@ -1,0 +1,15 @@
+{
+  "type": "critic_review",
+  "agentId": "trader-a",
+  "timestamp": "2026-05-19T17:42:04.355Z",
+  "data": {
+    "version": 6,
+    "finding": "The current strategy is overly reliant on quick park actions resulting in reduced capital efficiency due to repeated small transfers.",
+    "suggestedChanges": {
+      "cooldownAfterParkSeconds": 720
+    },
+    "confidence": "medium",
+    "reasoning": "This change is different from past suggestions as the goal is to reduce repeated small transfers, not to prolong withdrawal times. The existing cooldownAfterWithdrawSeconds is already increased to 720 seconds, this new cooldown will target the excessive park actions and provide a buffer period for more efficient capital allocations. Although, past suggestions from v3 did increase cooldownAfterWithdrawSeconds, it did not address the quick park action issue directly."
+  },
+  "_compiled": true
+}

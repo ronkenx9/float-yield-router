@@ -4,3 +4,6 @@
 
 ## 2026-05-19 Update
 Agent "trader-b" made two park actions, depositing a total of $20.35 USDC into FloatVault, with transactions occurring at 17:28:46 and 17:34:14, due to the reasons "Parked $18.50 into FloatVault" and "Parked $1.85 into FloatVault", respectively. Shortly after, at 17:35:18, the agent recalled $18.50 from FloatVault, as indicated by the reason "Recalled $18.50 from FloatVault". These actions resulted in a net deposit of $1.85 USDC into FloatVault, with all transactions completing successfully.
+
+## 2026-05-19 Update
+At 17:40:18, agent "trader-b" withdrew $16.65 from FloatVault, as indicated by the reason "Recalled $16.65 from FloatVault", with transaction 0xc77285d528aaa238b6b47bef79d0cf22e21d22add completing successfully. Shortly after, at 17:44:50, the agent parked $18.50 into FloatVault, due to the reason "Parked $18.50 into FloatVault", with transaction 0x003c3ed3fdcd707b633f18bb2f0396f458db5cfb29f. These actions resulted in a net deposit of $1.85 USDC into FloatVault. The agent's total FloatVault balance has changed by $1.85 USDC, considering the previous net deposit of $1.85 USDC and the current transactions.

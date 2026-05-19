@@ -1,0 +1,15 @@
+{
+  "type": "critic_review",
+  "agentId": "trader-c",
+  "timestamp": "2026-05-19T17:42:05.453Z",
+  "data": {
+    "version": 8,
+    "finding": "The current recallOnVolatilitySpike behavior is still causing the agent to act too frequently, potentially leading to reduced capital efficiency.",
+    "suggestedChanges": {
+      "minIdleTimeSeconds": 600
+    },
+    "confidence": "medium",
+    "reasoning": "This change differs from past suggestions (v5 and v4) as it increases the idle time, allowing for more time to pass before recalling funds. This should reduce the aggressive recall behavior and improve capital efficiency. However, a value of 3600 was chosen in v4 and resulted in worse outcomes, which is why we are proposing a slightly lower value of 600 seconds for a more balanced approach."
+  },
+  "_compiled": true
+}

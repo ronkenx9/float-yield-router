@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-19T17:39:40.549Z",
+  "updatedAt": "2026-05-19T17:48:00.215Z",
   "keywords": {
     "reserve": [
       "concepts/reserve-strategies.md"
@@ -25,28 +25,64 @@
   },
   "agents": {
     "trader-c": {
-      "lastEntry": "2026-05-19T17:39:39.947Z",
+      "lastEntry": "2026-05-19T17:48:00.215Z",
       "totalDecisions": 2,
       "totalParks": 0,
       "totalWithdraws": 2,
       "totalYield": 0
     },
     "trader-a": {
-      "lastEntry": "2026-05-19T17:39:40.549Z",
-      "totalDecisions": 3,
+      "lastEntry": "2026-05-19T17:47:59.245Z",
+      "totalDecisions": 4,
       "totalParks": 3,
-      "totalWithdraws": 0,
+      "totalWithdraws": 1,
       "totalYield": 0
     },
     "trader-b": {
-      "lastEntry": "2026-05-19T17:39:38.068Z",
-      "totalDecisions": 3,
-      "totalParks": 2,
+      "lastEntry": "2026-05-19T17:47:57.726Z",
+      "totalDecisions": 2,
+      "totalParks": 1,
       "totalWithdraws": 1,
       "totalYield": 0
     }
   },
   "strategyVersions": [
+    {
+      "version": 9,
+      "timestamp": "2026-05-19T17:44:33.241Z",
+      "agentId": "trader-a",
+      "finding": "The agent's high-frequency park actions are reducing capital efficiency due to repeated small transfers.",
+      "changes": {
+        "cooldownAfterParkSeconds": 720
+      }
+    },
+    {
+      "version": 8,
+      "timestamp": "2026-05-19T17:42:05.453Z",
+      "agentId": "trader-c",
+      "finding": "The current recallOnVolatilitySpike behavior is still causing the agent to act too frequently, potentially leading to reduced capital efficiency.",
+      "changes": {
+        "minIdleTimeSeconds": 600
+      }
+    },
+    {
+      "version": 7,
+      "timestamp": "2026-05-19T17:42:04.906Z",
+      "agentId": "trader-b",
+      "finding": "The current strategy may benefit from a longer cooldown period after withdrawals to reduce repeated transactions and increase capital efficiency.",
+      "changes": {
+        "cooldownAfterWithdrawSeconds": 720
+      }
+    },
+    {
+      "version": 6,
+      "timestamp": "2026-05-19T17:42:04.355Z",
+      "agentId": "trader-a",
+      "finding": "The current strategy is overly reliant on quick park actions resulting in reduced capital efficiency due to repeated small transfers.",
+      "changes": {
+        "cooldownAfterParkSeconds": 720
+      }
+    },
     {
       "version": 5,
       "timestamp": "2026-05-19T17:39:37.936Z",

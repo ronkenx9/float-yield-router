@@ -1,14 +1,14 @@
 # FLOAT System Status
 
-> Last compiled: 2026-05-19T17:39:41.368Z
+> Last compiled: 2026-05-19T17:48:01.062Z
 
 ## This Batch Summary
 | Metric | Value |
 |--------|-------|
 | Total decisions | 8 |
-| Successful parks | 5 |
-| Successful withdraws | 3 |
-| Total parked (USDC) | $70.30 |
+| Successful parks | 4 |
+| Successful withdraws | 4 |
+| Total parked (USDC) | $68.45 |
 | Failed txs | 0 |
 | Trade events | 0 |
 | Missed trades | 0 |

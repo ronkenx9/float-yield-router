@@ -12,6 +12,7 @@
   "type": "module",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^7.0.0",
+    "dotenv": "^17.4.2",
     "hardhat": "^3.4.5"
   },
   "dependencies": {

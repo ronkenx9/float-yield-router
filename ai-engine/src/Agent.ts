@@ -1,6 +1,6 @@
 import { CircleWallet } from './CircleWallet.js';
 import { generateText } from 'ai';
-import { openai } from '@ai-sdk/openai';
+import { groq } from '@ai-sdk/groq';
 
 export class FloatAIEngine {
   private circleWallet: CircleWallet;
@@ -12,7 +12,7 @@ export class FloatAIEngine {
   }
 
   /**
-   * Uses Vercel AI SDK / OpenAI to predict the Time-To-Next-Action (TTNA)
+   * Uses Vercel AI SDK / Groq to predict the Time-To-Next-Action (TTNA)
    * for a specific ecosystem protocol (e.g. ArcPerps Margin Vault).
    */
   async predictTTNA(protocolState: any): Promise<{ shouldPark: boolean, confidence: number, reasoning: string }> {
@@ -20,7 +20,7 @@ export class FloatAIEngine {
     
     try {
       const { text } = await generateText({
-        model: openai('gpt-4o-mini'),
+        model: groq('llama3-70b-8192'),
         prompt: `Analyze the following protocol state and predict if it will need liquidity in the next 60 seconds:
         ${JSON.stringify(protocolState, null, 2)}
         

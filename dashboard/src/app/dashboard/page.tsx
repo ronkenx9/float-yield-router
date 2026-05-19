@@ -6,15 +6,16 @@ import BorderGlow from '../../components/BorderGlow';
 
 const Plasma = dynamic(() => import('../../components/Plasma'), { ssr: false });
 
-// Simulated activity log entries
+// Activity log entries from the real agent backend
 interface ActivityEntry {
-  id: number;
+  id: number | string;
   type: 'route' | 'recall' | 'detect';
   action: string;
   desc: string;
   amount: string;
   time: string;
-  status: 'completed' | 'routing' | 'pending';
+  status: 'completed' | 'routing' | 'pending' | 'failed';
+  txHash?: string;
 }
 
 export default function Dashboard() {
@@ -25,6 +26,7 @@ export default function Dashboard() {
   const [idleManaged, setIdleManaged] = useState(0);
   const [yieldCaptured, setYieldCaptured] = useState(0);
   const [activeRoutes, setActiveRoutes] = useState(0);
+  const [agents, setAgents] = useState<any[]>([]);
 
   const fetchState = useCallback(async () => {
     try {
@@ -33,7 +35,9 @@ export default function Dashboard() {
       setActivities(data.activities || []);
       setIdleManaged(data.idleManaged || 0);
       setYieldCaptured(data.yieldCaptured || 0);
-      setActiveRoutes(data.isParked ? 6 : 5);
+      const activeCount = (data.agents || []).filter((a: any) => a.parkedBalance > 0).length;
+      setActiveRoutes(activeCount);
+      setAgents(data.agents || []);
     } catch (e) {
       console.error('Failed to fetch agent state:', e);
     }
@@ -53,8 +57,8 @@ export default function Dashboard() {
     
     // Optimistically show loading state
     const pendingActivity: ActivityEntry = {
-      id: Date.now(), type: 'detect', action: 'Analyzing Protocol State...',
-      desc: 'LLM Agent deciding Time-To-Next-Action', amount: '---', time: 'Just now', status: 'pending'
+      id: Date.now(), type: 'detect', action: 'Simulating payment event...',
+      desc: 'Triggering trade simulator request', amount: '---', time: 'Just now', status: 'pending'
     };
     setActivities(prev => [pendingActivity, ...prev.slice(0, 4)]);
 
@@ -64,7 +68,9 @@ export default function Dashboard() {
       setActivities(data.activities || []);
       setIdleManaged(data.idleManaged || 0);
       setYieldCaptured(data.yieldCaptured || 0);
-      setActiveRoutes(data.isParked ? 6 : 5);
+      const activeCount = (data.agents || []).filter((a: any) => a.parkedBalance > 0).length;
+      setActiveRoutes(activeCount);
+      setAgents(data.agents || []);
     } catch (e) {
       console.error('Simulation failed:', e);
     }
@@ -152,7 +158,9 @@ export default function Dashboard() {
             <BorderGlow borderRadius={20} glowRadius={30} glowColor="190 100 65" backgroundColor="rgba(5, 7, 11, 0.4)" edgeSensitivity={40}>
               <div className="metric-card" style={{ border: 'none', background: 'transparent', padding: '1.75rem' }}>
                 <div className="metric-label"><span className="metric-icon">◈</span> Idle Capital Managed</div>
-                <div className="metric-value cyan">${(idleManaged / 1_000_000).toFixed(2)}M</div>
+                <div className="metric-value cyan">
+                  {idleManaged >= 100000 ? `$${(idleManaged / 1_000_000).toFixed(2)}M` : `$${idleManaged.toFixed(2)}`}
+                </div>
                 <div className="metric-sub">Across {activeRoutes} active routes</div>
                 <div className="metric-change positive">+14.2% vs last 7d</div>
               </div>
@@ -171,7 +179,7 @@ export default function Dashboard() {
               <div className="metric-card" style={{ border: 'none', background: 'transparent', padding: '1.75rem' }}>
                 <div className="metric-label"><span className="metric-icon">⇄</span> Active Routes</div>
                 <div className="metric-value cyan">{activeRoutes}</div>
-                <div className="metric-sub">Across 5 protocols</div>
+                <div className="metric-sub">Across 3 subagents</div>
                 <div className="metric-change positive">100% healthy</div>
               </div>
             </BorderGlow>
@@ -253,76 +261,63 @@ export default function Dashboard() {
           {/* Integrations Grid */}
           <div className="animate-in stagger-4" style={{ marginBottom: '4rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <h3 style={{ fontFamily: 'Space Grotesk', fontSize: '1.25rem', fontWeight: 600, color: '#F5F7FA' }}>Ecosystem Integrations</h3>
-              <span style={{ fontFamily: 'Geist', fontSize: '0.75rem', color: 'rgba(245, 247, 250, 0.4)' }}>5 protocols connected</span>
+              <h3 style={{ fontFamily: 'Space Grotesk', fontSize: '1.25rem', fontWeight: 600, color: '#F5F7FA' }}>Active Subagents</h3>
+              <span style={{ fontFamily: 'Geist', fontSize: '0.75rem', color: 'rgba(245, 247, 250, 0.4)' }}>{agents.length} subagents monitored</span>
             </div>
             
             <div className="integrations-grid">
-              <BorderGlow borderRadius={20} glowRadius={30} glowColor="190 100 65" backgroundColor="rgba(5, 7, 11, 0.4)" edgeSensitivity={40}>
-                <div className="integration-card" style={{ border: 'none', background: 'transparent', padding: '1.75rem' }}>
-                  <div className="integration-header">
-                    <div className="integration-avatar" style={{ background: 'rgba(102, 230, 255, 0.1)', color: '#66E6FF' }}>AP</div>
-                    <div>
-                      <div className="integration-name">ArcPerps</div>
-                      <div className="integration-type">Idle Margin Vaults</div>
-                    </div>
-                  </div>
-                  <div className="integration-stats">
-                    <div>
-                      <div className="integration-stat-label">Parked</div>
-                      <div className="integration-stat-value" style={{ color: '#F5F7FA' }}>$4.5M</div>
-                    </div>
-                    <div style={{ textAlign: 'right' }}>
-                      <div className="integration-stat-label">Yield</div>
-                      <div className="integration-stat-value" style={{ color: '#7CFFB2' }}>$8,420</div>
-                    </div>
-                  </div>
-                </div>
-              </BorderGlow>
+              {agents.map(agent => {
+                const avatarColor = agent.agentId === 'trader-a' ? '#66E6FF' 
+                                  : agent.agentId === 'trader-b' ? '#7CFFB2' 
+                                  : '#FFC857';
+                
+                const glowColor = agent.agentId === 'trader-a' ? '190 100 65' 
+                                : agent.agentId === 'trader-b' ? '145 100 74' 
+                                : '45 100 67';
+                                
+                const totalCapital = (agent.liquidBalance || 0) + (agent.parkedBalance || 0);
 
-              <BorderGlow borderRadius={20} glowRadius={30} glowColor="145 100 74" backgroundColor="rgba(5, 7, 11, 0.4)" edgeSensitivity={40} colors={['#7CFFB2', '#4DE3FF', '#7CFFB2']}>
-                <div className="integration-card" style={{ border: 'none', background: 'transparent', padding: '1.75rem' }}>
-                  <div className="integration-header">
-                    <div className="integration-avatar" style={{ background: 'rgba(124, 255, 178, 0.1)', color: '#7CFFB2' }}>WP</div>
-                    <div>
-                      <div className="integration-name">WizPay</div>
-                      <div className="integration-type">Payroll Escrow</div>
+                return (
+                  <BorderGlow key={agent.agentId} borderRadius={20} glowRadius={30} glowColor={glowColor} backgroundColor="rgba(5, 7, 11, 0.4)" edgeSensitivity={40}>
+                    <div className="integration-card" style={{ border: 'none', background: 'transparent', padding: '1.75rem', display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
+                      <div>
+                        <div className="integration-header" style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'flex-start' }}>
+                          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                            <div className="integration-avatar" style={{ background: `rgba(${glowColor.split(' ').join(',')}, 0.1)`, color: avatarColor, fontWeight: 600, fontSize: '0.875rem' }}>
+                              {agent.label.split(' ')[1]}
+                            </div>
+                            <div>
+                              <div className="integration-name" style={{ fontWeight: 600 }}>{agent.label}</div>
+                              <div className="integration-type" style={{ textTransform: 'capitalize', fontSize: '0.6875rem', opacity: 0.6 }}>{agent.strategy} Preset</div>
+                            </div>
+                          </div>
+                          <span className={`activity-badge ${agent.status.toLowerCase() === 'idle' ? 'completed' : agent.status.toLowerCase() === 'cooldown' ? 'pending' : 'failed'}`} style={{ textTransform: 'uppercase', fontSize: '0.625rem', padding: '0.2rem 0.6rem' }}>
+                            {agent.status}
+                          </span>
+                        </div>
+                        <div style={{ fontSize: '0.6875rem', color: 'rgba(245,247,250,0.3)', fontFamily: 'Geist', wordBreak: 'break-all', marginTop: '0.75rem' }}>
+                          Wallet: {agent.walletId ? `${agent.walletId.slice(0, 8)}...${agent.walletId.slice(-8)}` : 'Loading...'}
+                        </div>
+                      </div>
+                      
+                      <div className="integration-stats" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', marginTop: '1.5rem', gap: '0.5rem', borderTop: '1px solid rgba(245,247,250,0.05)', paddingTop: '1rem' }}>
+                        <div>
+                          <div className="integration-stat-label" style={{ fontSize: '0.625rem', opacity: 0.4 }}>Liquid</div>
+                          <div className="integration-stat-value" style={{ color: '#F5F7FA', fontSize: '0.875rem', fontWeight: 500 }}>${(agent.liquidBalance || 0).toFixed(2)}</div>
+                        </div>
+                        <div style={{ textAlign: 'center' }}>
+                          <div className="integration-stat-label" style={{ fontSize: '0.625rem', opacity: 0.4 }}>Parked</div>
+                          <div className="integration-stat-value" style={{ color: '#66E6FF', fontSize: '0.875rem', fontWeight: 500 }}>${(agent.parkedBalance || 0).toFixed(2)}</div>
+                        </div>
+                        <div style={{ textAlign: 'right' }}>
+                          <div className="integration-stat-label" style={{ fontSize: '0.625rem', opacity: 0.4 }}>Total</div>
+                          <div className="integration-stat-value" style={{ color: '#7CFFB2', fontSize: '0.875rem', fontWeight: 500 }}>${totalCapital.toFixed(2)}</div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="integration-stats">
-                    <div>
-                      <div className="integration-stat-label">Parked</div>
-                      <div className="integration-stat-value" style={{ color: '#F5F7FA' }}>$0</div>
-                    </div>
-                    <div style={{ textAlign: 'right' }}>
-                      <div className="integration-stat-label">Yield</div>
-                      <div className="integration-stat-value" style={{ color: '#7CFFB2' }}>$2,140</div>
-                    </div>
-                  </div>
-                </div>
-              </BorderGlow>
-
-              <BorderGlow borderRadius={20} glowRadius={30} glowColor="190 100 65" backgroundColor="rgba(5, 7, 11, 0.4)" edgeSensitivity={40}>
-                <div className="integration-card" style={{ border: 'none', background: 'transparent', padding: '1.75rem' }}>
-                  <div className="integration-header">
-                    <div className="integration-avatar" style={{ background: 'rgba(245, 247, 250, 0.1)', color: '#F5F7FA' }}>AC</div>
-                    <div>
-                      <div className="integration-name">Arcade</div>
-                      <div className="integration-type">Agent Fee Settlement</div>
-                    </div>
-                  </div>
-                  <div className="integration-stats">
-                    <div>
-                      <div className="integration-stat-label">Parked</div>
-                      <div className="integration-stat-value" style={{ color: '#F5F7FA' }}>$890K</div>
-                    </div>
-                    <div style={{ textAlign: 'right' }}>
-                      <div className="integration-stat-label">Yield</div>
-                      <div className="integration-stat-value" style={{ color: '#7CFFB2' }}>$1,860</div>
-                    </div>
-                  </div>
-                </div>
-              </BorderGlow>
+                  </BorderGlow>
+                );
+              })}
             </div>
           </div>
         </main>

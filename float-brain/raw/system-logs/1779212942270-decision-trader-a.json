@@ -1,0 +1,14 @@
+{
+  "type": "decision",
+  "agentId": "trader-a",
+  "timestamp": "2026-05-19T17:49:02.270Z",
+  "data": {
+    "action": "WITHDRAW",
+    "amount": 18.5,
+    "txStatus": "COMPLETE",
+    "txHash": "[REDACTED_PRIVKEY]",
+    "score": 0.12954545454545452,
+    "reason": "Recalled $18.50 from FloatVault. TX: 0xc69f318cc09807d3e77db31388a766e2269c8fe6b0244603009edf0847337"
+  },
+  "_compiled": true
+}

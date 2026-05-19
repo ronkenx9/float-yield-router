@@ -1,0 +1,15 @@
+{
+  "type": "critic_review",
+  "agentId": "trader-c",
+  "timestamp": "2026-05-19T17:49:34.732Z",
+  "data": {
+    "version": 12,
+    "finding": "the current cooldown period after withdrawals is still too short, causing reduced capital efficiency",
+    "suggestedChanges": {
+      "cooldownAfterWithdrawSeconds": 1080
+    },
+    "confidence": "high",
+    "reasoning": "previous version history suggests that increasing this cooldown period from 180 to 1080 seconds improved capital efficiency, and since version v11 the cooldownAfterWithdrawSeconds was adjusted to 1080, we should restore it to the original suggestion to achieve optimal capital efficiency"
+  },
+  "_compiled": true
+}

@@ -1,0 +1,15 @@
+{
+  "type": "critic_review",
+  "agentId": "trader-a",
+  "timestamp": "2026-05-19T17:49:33.520Z",
+  "data": {
+    "version": 10,
+    "finding": "The current aggressive mode and lack of sufficient idle time are causing the agent to make too many decisions, resulting in reduced capital efficiency.",
+    "suggestedChanges": {
+      "minIdleTimeSeconds": 1200
+    },
+    "confidence": "medium",
+    "reasoning": "Past suggestions have incrementally increased the minimum idle time to counter over-aggressive behavior. Continuing this trend, setting the idle time to 20 minutes (1200 seconds) is a reasonable and cautious next step. This change differs from the 5 past suggestions that increased idle time by focusing on a more substantial increase rather than incremental adjustments."
+  },
+  "_compiled": true
+}

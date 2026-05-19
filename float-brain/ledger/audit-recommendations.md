@@ -3,44 +3,34 @@
 > **Human-owned section.** Change `- [ ]` to `- [x] Approved` to apply a suggestion.
 > The file-watcher will detect the change and update the live strategy within 2 seconds.
 
-## v6 — trader-a (2026-05-19T17:42)
+## v10 — trader-a (2026-05-19T17:49)
 
-**Finding**: The current strategy is overly reliant on quick park actions resulting in reduced capital efficiency due to repeated small transfers.
+**Finding**: The current aggressive mode and lack of sufficient idle time are causing the agent to make too many decisions, resulting in reduced capital efficiency.
 **Confidence**: medium
-**Reasoning**: This change is different from past suggestions as the goal is to reduce repeated small transfers, not to prolong withdrawal times. The existing cooldownAfterWithdrawSeconds is already increased to 720 seconds, this new cooldown will target the excessive park actions and provide a buffer period for more efficient capital allocations. Although, past suggestions from v3 did increase cooldownAfterWithdrawSeconds, it did not address the quick park action issue directly.
-**Suggested Changes**: `{"cooldownAfterParkSeconds":720}`
+**Reasoning**: Past suggestions have incrementally increased the minimum idle time to counter over-aggressive behavior. Continuing this trend, setting the idle time to 20 minutes (1200 seconds) is a reasonable and cautious next step. This change differs from the 5 past suggestions that increased idle time by focusing on a more substantial increase rather than incremental adjustments.
+**Suggested Changes**: `{"minIdleTimeSeconds":1200}`
 
-- [ ] **Approve** → applies `{"cooldownAfterParkSeconds":720}` to trader-a
+- [ ] **Approve** → applies `{"minIdleTimeSeconds":1200}` to trader-a
 - [ ] **Reject** → marks as declined
 
-## v7 — trader-b (2026-05-19T17:42)
+## v11 — trader-b (2026-05-19T17:49)
 
-**Finding**: The current strategy may benefit from a longer cooldown period after withdrawals to reduce repeated transactions and increase capital efficiency.
-**Confidence**: medium
-**Reasoning**: Considering the recent history of trader-b, this change aims to address the agent's tendency to withdraw funds frequently, potentially resulting in lower capital efficiency. This suggestion differs from past proposals by not simply increasing the cooldown period from its current value but rather aiming for a more significant adjustment, which has been demonstrated in previous iterations (e.g., v3 [trader-c]).
-**Suggested Changes**: `{"cooldownAfterWithdrawSeconds":720}`
+**Finding**: The current recall behavior for withdrawals is too aggressive, causing reduced capital efficiency.
+**Confidence**: high
+**Reasoning**: This change differs from past suggestions as it focuses on a longer cooldown period after withdrawals to further reduce repeated transactions and increase capital efficiency. A cooldown of 1080 seconds is chosen as it is longer than the current 720 seconds suggested in past versions, ensuring the agent does not act too quickly and make unnecessary decisions. This change is based on the agent's history of withdrawing $16.65 and then immediately parking $18.50 into FloatVault.
+**Suggested Changes**: `{"cooldownAfterWithdrawSeconds":1080}`
 
-- [ ] **Approve** → applies `{"cooldownAfterWithdrawSeconds":720}` to trader-b
+- [ ] **Approve** → applies `{"cooldownAfterWithdrawSeconds":1080}` to trader-b
 - [ ] **Reject** → marks as declined
 
-## v8 — trader-c (2026-05-19T17:42)
+## v12 — trader-c (2026-05-19T17:49)
 
-**Finding**: The current recallOnVolatilitySpike behavior is still causing the agent to act too frequently, potentially leading to reduced capital efficiency.
-**Confidence**: medium
-**Reasoning**: This change differs from past suggestions (v5 and v4) as it increases the idle time, allowing for more time to pass before recalling funds. This should reduce the aggressive recall behavior and improve capital efficiency. However, a value of 3600 was chosen in v4 and resulted in worse outcomes, which is why we are proposing a slightly lower value of 600 seconds for a more balanced approach.
-**Suggested Changes**: `{"minIdleTimeSeconds":600}`
+**Finding**: the current cooldown period after withdrawals is still too short, causing reduced capital efficiency
+**Confidence**: high
+**Reasoning**: previous version history suggests that increasing this cooldown period from 180 to 1080 seconds improved capital efficiency, and since version v11 the cooldownAfterWithdrawSeconds was adjusted to 1080, we should restore it to the original suggestion to achieve optimal capital efficiency
+**Suggested Changes**: `{"cooldownAfterWithdrawSeconds":1080}`
 
-- [ ] **Approve** → applies `{"minIdleTimeSeconds":600}` to trader-c
-- [ ] **Reject** → marks as declined
-
-## v9 — trader-a (2026-05-19T17:44)
-
-**Finding**: The agent's high-frequency park actions are reducing capital efficiency due to repeated small transfers.
-**Confidence**: medium
-**Reasoning**: Although this change was previously suggested and produced a worse outcome in v6, the current strategy version history indicates a continued aggressive recallOnVolatilitySpike behavior, leading to repeated transactions. A longer cooldown period after parks will help mitigate this issue, increasing capital efficiency.
-**Suggested Changes**: `{"cooldownAfterParkSeconds":720}`
-
-- [ ] **Approve** → applies `{"cooldownAfterParkSeconds":720}` to trader-a
+- [ ] **Approve** → applies `{"cooldownAfterWithdrawSeconds":1080}` to trader-c
 - [ ] **Reject** → marks as declined
 
 
@@ -48,8 +38,41 @@
 
 ## Historical Recommendations
 
+## v2 — trader-a (2026-05-19T17:37)
 
+**Finding**: agent's aggressive mode may be causing it to act too quickly, potentially leading to reduced capital efficiency
+**Confidence**: medium
+**Suggested Changes**: `{"maxActionsPerHour":7}`
 
-# Audit Recommendations
+- [x] Approved → applies `{"maxActionsPerHour":7}` to trader-a
+> ✅ **Applied at**: 2026-05-19T17:40:07.397Z
+- [ ] **Reject** → marks as declined
 
-> No recommendations yet. Run the orchestrator loop to generate Critic reviews.
+## v3 — trader-c (2026-05-19T17:37)
+
+**Finding**: The current strategy is overly aggressive and reactive, resulting in reduced capital efficiency due to repeated withdrawals.
+**Confidence**: medium
+**Suggested Changes**: `{"cooldownAfterWithdrawSeconds":720}`
+
+- [x] Approved → applies `{"cooldownAfterWithdrawSeconds":720}` to trader-c
+> ✅ **Applied at**: 2026-05-19T17:44:00.000Z
+- [ ] **Reject** → marks as declined
+
+## v4 — trader-a (2026-05-19T17:39)
+
+**Finding**: The agent's excessive recallOnVolatilitySpike behavior is causing it to act too quickly.
+**Confidence**: medium
+**Suggested Changes**: `{"minIdleTimeSeconds":3600}`
+
+- [ ] **Approve** → applies `{"minIdleTimeSeconds":3600}` to trader-a
+- [x] **Reject** — DECLINED: 80× increase (45s→3600s) would neuter aggressive strategy. Overcorrection.
+
+## v5 — trader-b (2026-05-19T17:39)
+
+**Finding**: The current recallOnVolatilitySpike behavior is still too aggressive and needs a more refined threshold.
+**Confidence**: high
+**Suggested Changes**: `{"minIdleTimeSeconds":300}`
+
+- [x] Approved → applies `{"minIdleTimeSeconds":300}` to trader-b
+> ✅ **Applied at**: 2026-05-19T17:48:30.000Z
+- [ ] **Reject** → marks as declined

@@ -1,0 +1,15 @@
+{
+  "type": "critic_review",
+  "agentId": "trader-b",
+  "timestamp": "2026-05-19T17:49:34.128Z",
+  "data": {
+    "version": 11,
+    "finding": "The current recall behavior for withdrawals is too aggressive, causing reduced capital efficiency.",
+    "suggestedChanges": {
+      "cooldownAfterWithdrawSeconds": 1080
+    },
+    "confidence": "high",
+    "reasoning": "This change differs from past suggestions as it focuses on a longer cooldown period after withdrawals to further reduce repeated transactions and increase capital efficiency. A cooldown of 1080 seconds is chosen as it is longer than the current 720 seconds suggested in past versions, ensuring the agent does not act too quickly and make unnecessary decisions. This change is based on the agent's history of withdrawing $16.65 and then immediately parking $18.50 into FloatVault."
+  },
+  "_compiled": true
+}

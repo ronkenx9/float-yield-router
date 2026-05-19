@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-19T17:48:00.215Z",
+  "updatedAt": "2026-05-19T17:50:38.508Z",
   "keywords": {
     "reserve": [
       "concepts/reserve-strategies.md"
@@ -25,28 +25,55 @@
   },
   "agents": {
     "trader-c": {
-      "lastEntry": "2026-05-19T17:48:00.215Z",
-      "totalDecisions": 2,
-      "totalParks": 0,
-      "totalWithdraws": 2,
+      "lastEntry": "2026-05-19T17:50:38.508Z",
+      "totalDecisions": 1,
+      "totalParks": 1,
+      "totalWithdraws": 0,
       "totalYield": 0
     },
     "trader-a": {
-      "lastEntry": "2026-05-19T17:47:59.245Z",
-      "totalDecisions": 4,
-      "totalParks": 3,
+      "lastEntry": "2026-05-19T17:50:37.929Z",
+      "totalDecisions": 1,
+      "totalParks": 0,
       "totalWithdraws": 1,
       "totalYield": 0
     },
     "trader-b": {
-      "lastEntry": "2026-05-19T17:47:57.726Z",
-      "totalDecisions": 2,
+      "lastEntry": "2026-05-19T17:50:36.929Z",
+      "totalDecisions": 1,
       "totalParks": 1,
-      "totalWithdraws": 1,
+      "totalWithdraws": 0,
       "totalYield": 0
     }
   },
   "strategyVersions": [
+    {
+      "version": 12,
+      "timestamp": "2026-05-19T17:49:34.732Z",
+      "agentId": "trader-c",
+      "finding": "the current cooldown period after withdrawals is still too short, causing reduced capital efficiency",
+      "changes": {
+        "cooldownAfterWithdrawSeconds": 1080
+      }
+    },
+    {
+      "version": 11,
+      "timestamp": "2026-05-19T17:49:34.128Z",
+      "agentId": "trader-b",
+      "finding": "The current recall behavior for withdrawals is too aggressive, causing reduced capital efficiency.",
+      "changes": {
+        "cooldownAfterWithdrawSeconds": 1080
+      }
+    },
+    {
+      "version": 10,
+      "timestamp": "2026-05-19T17:49:33.520Z",
+      "agentId": "trader-a",
+      "finding": "The current aggressive mode and lack of sufficient idle time are causing the agent to make too many decisions, resulting in reduced capital efficiency.",
+      "changes": {
+        "minIdleTimeSeconds": 1200
+      }
+    },
     {
       "version": 9,
       "timestamp": "2026-05-19T17:44:33.241Z",

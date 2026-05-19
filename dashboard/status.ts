@@ -98,3 +98,5 @@ async function printReport() {
 }
 
 printReport();
+
+export {};

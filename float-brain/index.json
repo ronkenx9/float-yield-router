@@ -1,0 +1,43 @@
+{
+  "updatedAt": "2026-05-19T17:28:26.656Z",
+  "keywords": {
+    "reserve": [
+      "concepts/reserve-strategies.md"
+    ],
+    "mpc": [
+      "concepts/mpc-security.md"
+    ],
+    "rate-limit": [
+      "concepts/failure-modes/rate-limits.md"
+    ],
+    "estimation-error": [
+      "concepts/failure-modes/estimation-error.md"
+    ],
+    "park": [
+      "concepts/reserve-strategies.md"
+    ],
+    "withdraw": [
+      "concepts/failure-modes/estimation-error.md"
+    ],
+    "critic": [
+      "ledger/audit-recommendations.md"
+    ]
+  },
+  "agents": {
+    "trader-c": {
+      "lastEntry": "2026-05-19T17:28:25.667Z",
+      "totalDecisions": 1,
+      "totalParks": 0,
+      "totalWithdraws": 1,
+      "totalYield": 0
+    },
+    "trader-a": {
+      "lastEntry": "2026-05-19T17:28:26.656Z",
+      "totalDecisions": 1,
+      "totalParks": 1,
+      "totalWithdraws": 0,
+      "totalYield": 0
+    }
+  },
+  "strategyVersions": []
+}

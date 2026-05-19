@@ -89,10 +89,10 @@ export function calculateParkabilityScore(
   // 5. Yield value: more parkable = more valuable to park
   const yieldValueScore = Math.min(1, capital.parkableAmount / Math.max(capital.totalBalance * 0.3, 0.01));
 
-  // 6. Churn penalty: too many recent actions
+  // 6. Churn penalty: too many recent park actions
   const recentActionsInHour = recentActions.filter(d => {
     const age = Date.now() - new Date(d.timestamp).getTime();
-    return age < 3600000 && d.action !== 'HOLD';
+    return age < 3600000 && d.action === 'PARK';
   }).length;
   const churnPenalty = Math.min(0.5, recentActionsInHour / config.maxActionsPerHour * 0.5);
 

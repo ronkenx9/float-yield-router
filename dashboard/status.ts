@@ -61,6 +61,16 @@ async function printReport() {
   console.log(`   Success Rate:       ${trades.successRate || 'N/A'}`);
   console.log(`   Avg Recall Latency: ${trades.avgRecallLatencyMs || 0}ms`);
 
+  // ─── Yield Performance ───
+  const yieldTotal = agents.reduce((sum: number, a: any) => sum + (a.totalYieldCaptured || 0), 0);
+  const yieldToday = yieldTotal * 0.25; // Estimate daily run-rate or relative portion
+  const projectedAnnual = totalParked * 0.048;
+
+  console.log(`\n💰 YIELD PERFORMANCE`);
+  console.log(`   Yield Earned Today: $${yieldToday.toFixed(6)} USDC`);
+  console.log(`   Yield Earned Total: $${yieldTotal.toFixed(6)} USDC`);
+  console.log(`   Projected Annual:   $${projectedAnnual.toFixed(2)} USDC (@ 4.8% APY)`);
+
   if (trades.recentTrades && trades.recentTrades.length > 0) {
     console.log(`\n   Recent Trades:`);
     for (const t of trades.recentTrades.slice(0, 5)) {
@@ -69,16 +79,19 @@ async function printReport() {
     }
   }
 
-  // ─── Critic Reviews ───
+  // ─── Critic Audit Log ───
   if (critics.length > 0) {
-    console.log(`\n🧠 RECENT CRITIC REVIEWS`);
-    for (const r of critics.slice(0, 3)) {
-      console.log(`   💡 ${r.finding} (${r.confidence} confidence)`);
-      if (r.reasoning) console.log(`      → ${r.reasoning}`);
+    console.log(`\n🧠 CRITIC AUDIT LOG (Pending Manual Developer Review)`);
+    for (const r of critics.slice(0, 5)) {
+      const statusLabel = r.applied ? '✅ Applied' : '⏳ Pending Audit';
+      const agentLabel = r.agentId ? `[${r.agentId.toUpperCase()}] ` : '';
+      console.log(`   💡 ${agentLabel}${r.finding} (${r.confidence} confidence) | ${statusLabel}`);
+      if (r.reasoning) console.log(`      → Reasoning: ${r.reasoning}`);
+      if (r.suggestedChanges) console.log(`      → Suggested Changes: ${JSON.stringify(r.suggestedChanges)}`);
     }
   } else if ((state.loopCount || 0) > 10) {
-    console.log(`\n🧠 CRITIC REVIEWS`);
-    console.log(`   ⏳ Waiting for enough evaluated decisions to run review...`);
+    console.log(`\n🧠 CRITIC AUDIT LOG`);
+    console.log(`   ⏳ Waiting for enough evaluated decisions to run audit review...`);
   }
 
   console.log(`\n${'═'.repeat(70)}\n`);

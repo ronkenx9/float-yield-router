@@ -42,6 +42,8 @@ export interface CriticReview {
   suggestedChanges: Partial<StrategyConfig>;
   confidence: 'low' | 'medium' | 'high';
   reasoning: string;
+  applied: boolean;
+  appliedAt?: string;
 }
 
 export async function reviewDecisions(
@@ -91,6 +93,7 @@ Respond in EXACTLY this JSON format:
       suggestedChanges: changes,
       confidence: parsed.confidence || 'low',
       reasoning: parsed.reasoning || '',
+      applied: false,
     };
   } catch (err: any) {
     console.error('[CRITIC] Review failed:', err.message);

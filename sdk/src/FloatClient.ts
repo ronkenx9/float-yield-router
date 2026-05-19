@@ -1,109 +1,213 @@
-import { ethers, Contract, type Signer } from 'ethers';
+import { ethers, Contract } from 'ethers';
 
-// Minimal ABI for FloatVault
+// Minimal ABI for FloatVault (read-only view queries)
 const FLOAT_VAULT_ABI = [
-  "function park(uint256 amount) external",
-  "function withdraw(uint256 amount) external",
   "function deposits(address account) external view returns (uint256)",
   "function totalDeposits() external view returns (uint256)",
-  "event Parked(address indexed agent, uint256 amount)",
-  "event Withdrawn(address indexed agent, uint256 amount)"
 ];
 
-// Minimal ABI for USDC/ERC20
-const ERC20_ABI = [
-  "function approve(address spender, uint256 amount) external returns (bool)",
-  "function balanceOf(address account) external view returns (uint256)",
-  "function allowance(address owner, address spender) external view returns (uint256)",
-  "function mint(address to, uint256 amount) external" // For testing
-];
+export interface PaymentEvent {
+  timestamp: string;
+  amount: number;
+}
+
+/**
+ * Interface definition for Circle's Agent Wallet Client / CLI wrapper.
+ * Instructs the wallet to transact using its 2-of-2 MPC key management.
+ * FLOAT never sees or touches the wallet's keys.
+ */
+export interface AgentWalletClient {
+  walletId: string;
+  getAddress(): Promise<string>;
+  getBalance(tokenAddress?: string): Promise<number>;
+  transfer(params: {
+    amount: number;
+    destinationAddress: string;
+    tokenId?: string;
+  }): Promise<{ txHash: string; status: string }>;
+}
 
 export interface FloatClientConfig {
   vaultAddress: string;
   usdcAddress: string;
-  signer: Signer;
+  agentWalletId: string;
+  circleCLI: AgentWalletClient; // Circle Agent Wallet client/CLI instance
+  rpcUrl?: string; // Public read-only RPC provider URL
+  liquidReserve?: 'adaptive' | number | { ratio: number };
+  maxRecallFrequencyPerHour?: number;
 }
 
 export class FloatClient {
-  private vault: any;
-  private usdc: any;
-  private signer: Signer;
+  private vaultAddress: string;
+  private usdcAddress: string;
+  private agentWalletId: string;
+  private circleCLI: AgentWalletClient;
+  private vaultContract: any;
+  private liquidReserve: 'adaptive' | number | { ratio: number };
+  private maxRecallFrequencyPerHour: number;
+  private txHistory: PaymentEvent[] = [];
+  private recallHistory: number[] = []; // Timestamps of recalls
 
   constructor(config: FloatClientConfig) {
-    this.signer = config.signer;
-    this.vault = new Contract(config.vaultAddress, FLOAT_VAULT_ABI, this.signer);
-    this.usdc = new Contract(config.usdcAddress, ERC20_ABI, this.signer);
+    this.vaultAddress = config.vaultAddress;
+    this.usdcAddress = config.usdcAddress;
+    this.agentWalletId = config.agentWalletId;
+    this.circleCLI = config.circleCLI;
+    this.liquidReserve = config.liquidReserve ?? 'adaptive';
+    this.maxRecallFrequencyPerHour = config.maxRecallFrequencyPerHour ?? 2;
+
+    // Use a read-only public provider to fetch vault state (no key custody required)
+    const providerUrl = config.rpcUrl ?? 'https://rpc.testnet.arc.network';
+    const readOnlyProvider = new ethers.JsonRpcProvider(providerUrl);
+    this.vaultContract = new Contract(this.vaultAddress, FLOAT_VAULT_ABI, readOnlyProvider);
   }
 
   /**
-   * Parks idle USDC into the FLOAT yield router.
-   * Automatically handles approval if necessary.
+   * Computes the target liquid reserve based on current configuration and spend history.
    */
-  async park(amount: bigint): Promise<ethers.TransactionReceipt | null> {
-    const owner = await this.signer.getAddress();
-    const vaultAddr = await this.vault.getAddress();
-
-    const allowance = await this.usdc.allowance(owner, vaultAddr);
-    if (allowance < amount) {
-      console.log(`Approving ${ethers.formatUnits(amount, 6)} USDC for FLOAT Vault...`);
-      const tx = await this.usdc.approve(vaultAddr, ethers.MaxUint256);
-      await tx.wait();
+  async calculateTargetReserve(totalBalance: number): Promise<{ reserve: number; mode: string; samplesNeeded?: number }> {
+    // 1. Static Mode
+    if (typeof this.liquidReserve === 'number') {
+      return { reserve: this.liquidReserve, mode: 'static' };
     }
 
-    console.log(`Parking ${ethers.formatUnits(amount, 6)} USDC...`);
-    const tx = await this.vault.park(amount);
-    return tx.wait();
-  }
+    // 2. Ratio Mode
+    if (typeof this.liquidReserve === 'object' && this.liquidReserve !== null && 'ratio' in this.liquidReserve) {
+      return { reserve: totalBalance * this.liquidReserve.ratio, mode: 'ratio' };
+    }
 
-  /**
-   * Withdraws USDC instantly from the FLOAT yield router.
-   */
-  async withdraw(amount: bigint): Promise<ethers.TransactionReceipt | null> {
-    console.log(`Withdrawing ${ethers.formatUnits(amount, 6)} USDC...`);
-    const tx = await this.vault.withdraw(amount);
-    return tx.wait();
-  }
-
-  /**
-   * Gets the current deposited balance for this agent.
-   */
-  async getBalance(): Promise<bigint> {
-    const owner = await this.signer.getAddress();
-    return this.vault.deposits(owner);
-  }
-
-  /**
-   * A wrapper that abstracts trading logic. Checks idle balance and parks it,
-   * or withdraws it before executing a trade if liquid funds are too low.
-   * This is a simplified "auto-pilot" demonstration.
-   */
-  async executeTradeWithAutoFloat(
-    tradeExecution: () => Promise<void>,
-    requiredLiquidity: bigint
-  ): Promise<void> {
-    const owner = await this.signer.getAddress();
-    const liquidBalance = await this.usdc.balanceOf(owner);
-
-    if (liquidBalance < requiredLiquidity) {
-      const deficit = requiredLiquidity - liquidBalance;
-      const parkedBalance = await this.getBalance();
+    // 3. Adaptive Mode (Value-at-Risk Volatility-adjusted Spend Buffer)
+    if (this.liquidReserve === 'adaptive') {
+      const MIN_SAMPLE_SIZE = 10;
       
-      if (parkedBalance >= deficit) {
-         console.log(`[FLOAT] Liquid deficit detected. Auto-withdrawing ${ethers.formatUnits(deficit, 6)} USDC...`);
-         await this.withdraw(deficit);
-      } else {
-         console.warn(`[FLOAT] Warning: Insufficient parked balance to cover trade liquidity.`);
+      // Cold-start bootstrap protocol
+      if (this.txHistory.length < MIN_SAMPLE_SIZE) {
+        return {
+          reserve: totalBalance * 0.5, // Keep 50% liquid until confidence is calibrated
+          mode: 'bootstrap',
+          samplesNeeded: MIN_SAMPLE_SIZE - this.txHistory.length
+        };
       }
+
+      // Compute average transaction size
+      const sizes = this.txHistory.map(tx => tx.amount);
+      const avgSize = sizes.reduce((sum, val) => sum + val, 0) / sizes.length;
+
+      // Compute standard deviation of transaction intervals (in hours)
+      const intervals: number[] = [];
+      for (let i = 1; i < this.txHistory.length; i++) {
+        const t1 = this.txHistory[i - 1]?.timestamp;
+        const t2 = this.txHistory[i]?.timestamp;
+        if (t1 && t2) {
+          intervals.push(Math.abs(new Date(t2).getTime() - new Date(t1).getTime()) / 3600000); // interval in hours
+        }
+      }
+
+      if (intervals.length === 0) {
+        return { reserve: avgSize, mode: 'adaptive' };
+      }
+
+      const avgInterval = intervals.reduce((sum, val) => sum + val, 0) / intervals.length;
+      const squaredDiffs = intervals.map(val => Math.pow(val - avgInterval, 2));
+      const variance = squaredDiffs.reduce((sum, val) => sum + val, 0) / squaredDiffs.length;
+      const stdDevInterval = Math.sqrt(variance);
+
+      // Value at Risk formula: AvgSize + k * stdDevInterval (k=1.5 yields 92% confidence envelope)
+      const calculatedReserve = avgSize + 1.5 * stdDevInterval;
+      
+      // Guardrails: ensure reserve stays between $1.00 and 90% of total balance
+      const finalReserve = Math.max(1.0, Math.min(calculatedReserve, totalBalance * 0.9));
+
+      return { reserve: finalReserve, mode: 'adaptive' };
     }
 
-    // Execute the actual trade strategy
-    await tradeExecution();
+    // Default fallback
+    return { reserve: totalBalance * 0.3, mode: 'default' };
+  }
 
-    // Post-trade: park any remaining idle liquidity
-    const newLiquidBalance = await this.usdc.balanceOf(owner);
-    if (newLiquidBalance > 0n) {
-       console.log(`[FLOAT] Trade complete. Auto-parking ${ethers.formatUnits(newLiquidBalance, 6)} idle USDC...`);
-       await this.park(newLiquidBalance);
-    }
+  /**
+   * Instructs the Circle Agent Wallet to transfer USDC to FloatVault to earn yield.
+   * Circle Agent Wallet signs and executes the transaction via MPC.
+   */
+  async park(amount: number): Promise<{ txHash: string; status: string }> {
+    console.log(`[FLOAT] Instructing Circle Agent Wallet to park $${amount.toFixed(2)} USDC...`);
+    return this.circleCLI.transfer({
+      amount,
+      destinationAddress: this.vaultAddress
+    });
+  }
+
+  /**
+   * Instructs the Circle Agent Wallet to withdraw USDC from FloatVault back to the agent wallet.
+   */
+  async withdraw(amount: number): Promise<{ txHash: string; status: string }> {
+    console.log(`[FLOAT] Instructing Circle Agent Wallet to recall $${amount.toFixed(2)} USDC...`);
+    const agentAddress = await this.circleCLI.getAddress();
+    return this.circleCLI.transfer({
+      amount,
+      destinationAddress: agentAddress
+    });
+  }
+
+  /**
+   * Gets the current deposited balance for this agent in the vault via public read RPC.
+   */
+  async getBalance(): Promise<number> {
+    const owner = await this.circleCLI.getAddress();
+    const balance = await this.vaultContract.deposits(owner);
+    return Number(ethers.formatUnits(balance, 6));
+  }
+
+  /**
+   * Returns current payment history list.
+   */
+  getTxHistory(): PaymentEvent[] {
+    return this.txHistory;
+  }
+
+  /**
+   * Intercepts and wraps a payment execution to guarantee reserve liquidity.
+   */
+  wrapPayment(paymentExecutor: (amount: number, recipient: string) => Promise<any>) {
+    return async (amount: number, recipient: string): Promise<any> => {
+      const owner = await this.circleCLI.getAddress();
+      const liquidBalance = await this.circleCLI.getBalance(this.usdcAddress);
+
+      const rawParked = await this.vaultContract.deposits(owner);
+      const parkedBalance = Number(ethers.formatUnits(rawParked, 6));
+      
+      // Record the transaction attempt in history
+      this.txHistory.push({
+        timestamp: new Date().toISOString(),
+        amount
+      });
+
+      if (this.txHistory.length > 100) {
+        this.txHistory.shift();
+      }
+
+      if (liquidBalance < amount) {
+        const deficit = amount - liquidBalance;
+        if (parkedBalance >= deficit) {
+          const now = Date.now();
+          
+          // Check recall rate limit over the last sliding hour window
+          this.recallHistory = this.recallHistory.filter(t => now - t < 3600000);
+
+          if (this.recallHistory.length >= this.maxRecallFrequencyPerHour) {
+            console.warn(`[FLOAT CRITICAL WARNING] Recall frequency limit reached (${this.maxRecallFrequencyPerHour}/hour). Triggering emergency recall override to prevent agent payment failure.`);
+          }
+
+          console.log(`[FLOAT] Liquid reserve deficit detected. Instructing wallet to recall $${deficit.toFixed(2)} USDC...`);
+          await this.withdraw(deficit);
+          this.recallHistory.push(now);
+        } else {
+          throw new Error(`[FLOAT] Insufficient funds: Liquid ($${liquidBalance.toFixed(2)}) + Parked ($${parkedBalance.toFixed(2)}) cannot cover payment ($${amount.toFixed(2)})`);
+        }
+      }
+
+      // Execute the actual payment task
+      return paymentExecutor(amount, recipient);
+    };
   }
 }

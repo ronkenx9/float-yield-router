@@ -325,15 +325,16 @@ export class FloatOrchestrator {
         if (review && review.suggestedChanges) {
           console.log(`[FLOAT CRITIC] ${agentId}: "${review.finding}" (${review.confidence} confidence)`);
           
-          // Apply the suggested changes to the agent's strategy config
-          agent.config.strategy = {
-            ...agent.config.strategy,
-            ...review.suggestedChanges
+          const auditReview = {
+            ...review,
+            agentId,
+            timestamp: new Date().toISOString(),
+            applied: false,
           };
-          console.log(`[FLOAT CRITIC] ${agentId}: Applied strategy changes:`, JSON.stringify(review.suggestedChanges));
+          console.log(`[FLOAT CRITIC AUDIT] ${agentId}: Suggested strategy changes:`, JSON.stringify(review.suggestedChanges));
           
           agent.lastAdaptedDecisionCount = decisionsCount;
-          this.criticReviews = [review, ...this.criticReviews].slice(0, 20);
+          this.criticReviews = [auditReview as any, ...this.criticReviews].slice(0, 20);
           this.strategyVersion++;
         }
       } else {

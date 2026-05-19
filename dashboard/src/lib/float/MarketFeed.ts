@@ -65,8 +65,8 @@ export async function getMarketSnapshot(agentAddress?: string): Promise<MarketSn
     }
   } catch { /* use defaults */ }
 
-  // Network activity score: lower block interval = more active
-  const networkActivityScore = Math.min(1, Math.max(0, 1 - (recentBlockInterval / 5)));
+  // Network activity score: calibrated for Arc Testnet (normal block time is ~1s)
+  const networkActivityScore = Math.min(1, Math.max(0, 1 - (recentBlockInterval / 1.1)));
 
   return {
     timestamp: now.toISOString(),

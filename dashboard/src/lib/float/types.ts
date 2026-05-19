@@ -36,7 +36,7 @@ export const STRATEGY_PRESETS: Record<string, StrategyConfig> = {
     mode: 'aggressive',
     minHotReserveRatio: 0.40,      // Critic v4: hold slightly more liquid reserve
     maxParkRatio: 0.75,
-    minIdleTimeSeconds: 120,
+    minIdleTimeSeconds: 45,
     recallOnVolatilitySpike: true, // Critic v4: re-enable volatility management
     maxActionsPerHour: 15,         // Critic v5: increased to 15 to capture more yield and recall dynamically
     cooldownAfterParkSeconds: 120,
@@ -49,7 +49,7 @@ export const STRATEGY_PRESETS: Record<string, StrategyConfig> = {
     mode: 'balanced',
     minHotReserveRatio: 0.35,
     maxParkRatio: 0.55,
-    minIdleTimeSeconds: 300,
+    minIdleTimeSeconds: 90,
     recallOnVolatilitySpike: true,
     maxActionsPerHour: 6,
     cooldownAfterParkSeconds: 180,
@@ -62,7 +62,7 @@ export const STRATEGY_PRESETS: Record<string, StrategyConfig> = {
     mode: 'conservative',
     minHotReserveRatio: 0.55,
     maxParkRatio: 0.30,
-    minIdleTimeSeconds: 600,
+    minIdleTimeSeconds: 150,
     recallOnVolatilitySpike: true,
     maxActionsPerHour: 3,
     cooldownAfterParkSeconds: 300,

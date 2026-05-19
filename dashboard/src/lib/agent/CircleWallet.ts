@@ -18,13 +18,31 @@ export class CircleWallet {
 
   /**
    * Get the real USDC balance of this wallet from the Circle API.
+   * Retries up to 2 times on transient network/TLS errors before throwing,
+   * so a single SSL hiccup does not silently poison the FLOAT loop.
    */
   async getUSDCBalance(): Promise<number> {
-    const response = await this.circleClient.getWalletTokenBalance({ id: this.walletId });
-    const balances = response.data?.tokenBalances;
-    if (!balances || balances.length === 0) return 0;
-    const usdcBalance = balances.find(b => b.token?.symbol === 'USDC');
-    return usdcBalance ? parseFloat(usdcBalance.amount ?? '0') : 0;
+    let lastErr: unknown;
+    for (let attempt = 0; attempt <= 2; attempt++) {
+      try {
+        const response = await this.circleClient.getWalletTokenBalance({ id: this.walletId });
+        const balances = response.data?.tokenBalances;
+        if (!balances || balances.length === 0) return 0;
+        const usdcBalance = balances.find(b => b.token?.symbol === 'USDC');
+        return usdcBalance ? parseFloat(usdcBalance.amount ?? '0') : 0;
+      } catch (err: any) {
+        lastErr = err;
+        const msg = String(err?.message || err || '').toLowerCase();
+        const transient =
+          msg.includes('ssl') || msg.includes('tls') || msg.includes('econnreset') ||
+          msg.includes('etimedout') || msg.includes('socket hang up') || msg.includes('bad record mac');
+        if (attempt === 2 || !transient) throw err;
+        const backoff = 250 * Math.pow(2, attempt);
+        console.warn(`[CIRCLE WALLET] getUSDCBalance attempt ${attempt + 1} failed (${err.message}); retrying in ${backoff}ms`);
+        await new Promise(resolve => setTimeout(resolve, backoff));
+      }
+    }
+    throw lastErr;
   }
 
   /**

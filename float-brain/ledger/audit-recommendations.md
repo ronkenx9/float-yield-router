@@ -11,7 +11,7 @@
 **Suggested Changes**: `{"minIdleTimeSeconds":1200}`
 
 - [ ] **Approve** → applies `{"minIdleTimeSeconds":1200}` to trader-a
-- [ ] **Reject** → marks as declined
+- [x] **Reject** — DECLINED: 26× increase (45s→1200s) is overcorrection; aggressive strategy needs reactivity. Same pattern as rejected v4.
 
 ## v11 — trader-b (2026-05-19T17:49)
 
@@ -21,7 +21,7 @@
 **Suggested Changes**: `{"cooldownAfterWithdrawSeconds":1080}`
 
 - [ ] **Approve** → applies `{"cooldownAfterWithdrawSeconds":1080}` to trader-b
-- [ ] **Reject** → marks as declined
+- [x] **Reject** — DECLINED: v5 (minIdleTimeSeconds:300) applied minutes ago; wait for it to take effect before adding another constraint.
 
 ## v12 — trader-c (2026-05-19T17:49)
 
@@ -31,7 +31,7 @@
 **Suggested Changes**: `{"cooldownAfterWithdrawSeconds":1080}`
 
 - [ ] **Approve** → applies `{"cooldownAfterWithdrawSeconds":1080}` to trader-c
-- [ ] **Reject** → marks as declined
+- [x] **Reject** — DECLINED: v3 (720s cooldown) just produced trader-c's first park action. Let it run before escalating further.
 
 
 ---

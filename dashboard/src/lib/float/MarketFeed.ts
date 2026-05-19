@@ -10,14 +10,51 @@ import type { MarketSnapshot } from './types';
 const ARC_RPC = 'https://rpc.testnet.arc.network';
 const FLOAT_VAULT = '0xfAe6a9D5b0835ca7e9B090eCe0f57C14899BeDA6';
 
+const MAX_RPC_RETRIES = 2;
+const RPC_BASE_BACKOFF_MS = 250;
+
+function isTransientRpcError(err: any): boolean {
+  const msg = String(err?.message || err || '').toLowerCase();
+  return (
+    msg.includes('ssl') ||
+    msg.includes('tls') ||
+    msg.includes('econnreset') ||
+    msg.includes('etimedout') ||
+    msg.includes('socket hang up') ||
+    msg.includes('fetch failed') ||
+    msg.includes('econnrefused') ||
+    msg.includes('bad record mac')
+  );
+}
+
 export async function rpcCall(method: string, params: any[] = []): Promise<any> {
-  const res = await fetch(ARC_RPC, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params }),
-  });
-  const json = await res.json();
-  return json.result;
+  let lastErr: unknown;
+  for (let attempt = 0; attempt <= MAX_RPC_RETRIES; attempt++) {
+    try {
+      const res = await fetch(ARC_RPC, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params }),
+      });
+      if (!res.ok) {
+        throw new Error(`RPC ${method} HTTP ${res.status}`);
+      }
+      const json = await res.json();
+      if (json.error) {
+        throw new Error(`RPC ${method} error: ${json.error.message || JSON.stringify(json.error)}`);
+      }
+      return json.result;
+    } catch (err: any) {
+      lastErr = err;
+      if (attempt === MAX_RPC_RETRIES || !isTransientRpcError(err)) {
+        throw err;
+      }
+      const backoff = RPC_BASE_BACKOFF_MS * Math.pow(2, attempt);
+      console.warn(`[FLOAT RPC] ${method} attempt ${attempt + 1} failed (${err.message}); retrying in ${backoff}ms`);
+      await new Promise(resolve => setTimeout(resolve, backoff));
+    }
+  }
+  throw lastErr;
 }
 
 export async function getMarketSnapshot(agentAddress?: string): Promise<MarketSnapshot> {

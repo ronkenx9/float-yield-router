@@ -142,6 +142,8 @@ export interface DecisionLog {
   reason: string;
   txHash?: string;
   txStatus?: 'PENDING' | 'COMPLETE' | 'FAILED';
+  /** Total wall-clock latency from action start to confirmation, in ms. Only set on PARK/WITHDRAW. */
+  recallLatencyMs?: number;
   outcome?: DecisionOutcome;
 }
 

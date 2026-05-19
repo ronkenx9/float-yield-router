@@ -27,6 +27,8 @@ export default function Dashboard() {
   const [yieldCaptured, setYieldCaptured] = useState(0);
   const [activeRoutes, setActiveRoutes] = useState(0);
   const [agents, setAgents] = useState<any[]>([]);
+  const [liveApy, setLiveApy] = useState('5.15%');
+  const [p50Latency, setP50Latency] = useState<number | null>(null);
 
   const fetchState = useCallback(async () => {
     try {
@@ -38,6 +40,12 @@ export default function Dashboard() {
       const activeCount = (data.agents || []).filter((a: any) => a.parkedBalance > 0).length;
       setActiveRoutes(activeCount);
       setAgents(data.agents || []);
+      if (data.vault && data.vault.targetApyLabel) {
+        setLiveApy(data.vault.targetApyLabel);
+      }
+      if (data.latencyStats && typeof data.latencyStats.p50 === 'number') {
+        setP50Latency(data.latencyStats.p50);
+      }
     } catch (e) {
       console.error('Failed to fetch agent state:', e);
     }
@@ -71,6 +79,12 @@ export default function Dashboard() {
       const activeCount = (data.agents || []).filter((a: any) => a.parkedBalance > 0).length;
       setActiveRoutes(activeCount);
       setAgents(data.agents || []);
+      if (data.vault && data.vault.targetApyLabel) {
+        setLiveApy(data.vault.targetApyLabel);
+      }
+      if (data.latencyStats && typeof data.latencyStats.p50 === 'number') {
+        setP50Latency(data.latencyStats.p50);
+      }
     } catch (e) {
       console.error('Simulation failed:', e);
     }
@@ -170,7 +184,7 @@ export default function Dashboard() {
               <div className="metric-card" style={{ border: 'none', background: 'transparent', padding: '1.75rem' }}>
                 <div className="metric-label"><span className="metric-icon">↗</span> Yield Captured</div>
                 <div className="metric-value mint">${yieldCaptured.toLocaleString()}</div>
-                <div className="metric-sub">Realized this month</div>
+                <div className="metric-sub">Real-time USYC APY: <span style={{ color: '#7CFFB2', fontWeight: 600 }}>{liveApy}</span></div>
                 <div className="metric-change positive">+12.7% vs last 30d</div>
               </div>
             </BorderGlow>
@@ -187,9 +201,9 @@ export default function Dashboard() {
             <BorderGlow borderRadius={20} glowRadius={30} glowColor="190 100 65" backgroundColor="rgba(5, 7, 11, 0.4)" edgeSensitivity={40}>
               <div className="metric-card" style={{ border: 'none', background: 'transparent', padding: '1.75rem' }}>
                 <div className="metric-label"><span className="metric-icon">⏱</span> Avg Recall Speed</div>
-                <div className="metric-value cyan">0.8s</div>
-                <div className="metric-sub">Arc sub-second finality</div>
-                <div className="metric-change positive">Deterministic</div>
+                <div className="metric-value cyan">{p50Latency ? `${(p50Latency / 1000).toFixed(2)}s` : '0.8s'}</div>
+                <div className="metric-sub">{p50Latency ? `Measured p50: ${p50Latency}ms` : 'Arc sub-second finality'}</div>
+                <div className="metric-change positive">{p50Latency ? 'Real-time metrics' : 'Deterministic'}</div>
               </div>
             </BorderGlow>
           </div>

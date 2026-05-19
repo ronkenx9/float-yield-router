@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-19T17:50:38.508Z",
+  "updatedAt": "2026-05-19T17:54:34.810Z",
   "keywords": {
     "reserve": [
       "concepts/reserve-strategies.md"
@@ -47,6 +47,60 @@
     }
   },
   "strategyVersions": [
+    {
+      "version": 18,
+      "timestamp": "2026-05-19T17:54:34.810Z",
+      "agentId": "trader-c",
+      "finding": "The strategy's recall behavior is still too aggressive, causing reduced capital efficiency.",
+      "changes": {
+        "minHotReserveRatio": 0.58
+      }
+    },
+    {
+      "version": 17,
+      "timestamp": "2026-05-19T17:54:34.177Z",
+      "agentId": "trader-b",
+      "finding": "The strategy's aggressive recall behavior is causing reduced capital efficiency, suggesting a need for a longer cooldown after withdrawals.",
+      "changes": {
+        "cooldownAfterWithdrawSeconds": 1080
+      }
+    },
+    {
+      "version": 16,
+      "timestamp": "2026-05-19T17:54:33.462Z",
+      "agentId": "trader-a",
+      "finding": "Withdrawal decisions can be further optimized.",
+      "changes": {
+        "withdrawThreshold": 0.3
+      }
+    },
+    {
+      "version": 15,
+      "timestamp": "2026-05-19T17:52:05.391Z",
+      "agentId": "trader-c",
+      "finding": "The frequent withdrawals and subsequent recalls are reducing capital efficiency.",
+      "changes": {
+        "withdrawThreshold": 0.6
+      }
+    },
+    {
+      "version": 14,
+      "timestamp": "2026-05-19T17:52:04.657Z",
+      "agentId": "trader-b",
+      "finding": "The agent's recall behavior is still too aggressive, and a higher cooldown period after withdrawals can help improve capital efficiency.",
+      "changes": {
+        "cooldownAfterWithdrawSeconds": 1080
+      }
+    },
+    {
+      "version": 13,
+      "timestamp": "2026-05-19T17:52:04.057Z",
+      "agentId": "trader-a",
+      "finding": "The agent's recall behavior is too aggressive, leading to frequent withdrawals and potential loss of capital efficiency.",
+      "changes": {
+        "withdrawThreshold": 0.3
+      }
+    },
     {
       "version": 12,
       "timestamp": "2026-05-19T17:49:34.732Z",

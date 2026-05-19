@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-19T17:28:26.656Z",
+  "updatedAt": "2026-05-19T17:39:40.549Z",
   "keywords": {
     "reserve": [
       "concepts/reserve-strategies.md"
@@ -25,19 +25,63 @@
   },
   "agents": {
     "trader-c": {
-      "lastEntry": "2026-05-19T17:28:25.667Z",
-      "totalDecisions": 1,
+      "lastEntry": "2026-05-19T17:39:39.947Z",
+      "totalDecisions": 2,
       "totalParks": 0,
-      "totalWithdraws": 1,
+      "totalWithdraws": 2,
       "totalYield": 0
     },
     "trader-a": {
-      "lastEntry": "2026-05-19T17:28:26.656Z",
-      "totalDecisions": 1,
-      "totalParks": 1,
+      "lastEntry": "2026-05-19T17:39:40.549Z",
+      "totalDecisions": 3,
+      "totalParks": 3,
       "totalWithdraws": 0,
+      "totalYield": 0
+    },
+    "trader-b": {
+      "lastEntry": "2026-05-19T17:39:38.068Z",
+      "totalDecisions": 3,
+      "totalParks": 2,
+      "totalWithdraws": 1,
       "totalYield": 0
     }
   },
-  "strategyVersions": []
+  "strategyVersions": [
+    {
+      "version": 5,
+      "timestamp": "2026-05-19T17:39:37.936Z",
+      "agentId": "trader-b",
+      "finding": "The current recallOnVolatilitySpike behavior is still too aggressive and needs a more refined threshold to maximize capital efficiency.",
+      "changes": {
+        "minIdleTimeSeconds": 300
+      }
+    },
+    {
+      "version": 4,
+      "timestamp": "2026-05-19T17:39:37.427Z",
+      "agentId": "trader-a",
+      "finding": "The agent's excessive recallOnVolatilitySpike behavior is causing it to act too quickly, potentially leading to reduced capital efficiency.",
+      "changes": {
+        "minIdleTimeSeconds": 3600
+      }
+    },
+    {
+      "version": 3,
+      "timestamp": "2026-05-19T17:37:05.064Z",
+      "agentId": "trader-c",
+      "finding": "The current strategy is overly aggressive and reactive, resulting in reduced capital efficiency due to repeated withdrawals.",
+      "changes": {
+        "cooldownAfterWithdrawSeconds": 720
+      }
+    },
+    {
+      "version": 2,
+      "timestamp": "2026-05-19T17:37:03.807Z",
+      "agentId": "trader-a",
+      "finding": "agent's aggressive mode may be causing it to act too quickly, potentially leading to reduced capital efficiency",
+      "changes": {
+        "maxActionsPerHour": 7
+      }
+    }
+  ]
 }

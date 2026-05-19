@@ -1,0 +1,14 @@
+{
+  "type": "decision",
+  "agentId": "trader-b",
+  "timestamp": "2026-05-19T17:34:14.501Z",
+  "data": {
+    "action": "PARK",
+    "amount": 1.85,
+    "txStatus": "COMPLETE",
+    "txHash": "[REDACTED_PRIVKEY]",
+    "score": 0.6222943722943722,
+    "reason": "Parked $1.85 into FloatVault. TX: [REDACTED_PRIVKEY]"
+  },
+  "_compiled": true
+}

@@ -1,0 +1,15 @@
+{
+  "type": "critic_review",
+  "agentId": "trader-a",
+  "timestamp": "2026-05-19T17:39:37.427Z",
+  "data": {
+    "version": 4,
+    "finding": "The agent's excessive recallOnVolatilitySpike behavior is causing it to act too quickly, potentially leading to reduced capital efficiency.",
+    "suggestedChanges": {
+      "minIdleTimeSeconds": 3600
+    },
+    "confidence": "medium",
+    "reasoning": "Given the agent's recent good decisions indicate that it's able to find profitable routes, increasing the minIdleTimeSeconds to 3600 seconds (1 hour) will give it more leeway to assess the market volatility before recalling funds. This change differs from past suggestions as it directly addresses the recallOnVolatilitySpike behavior by allowing the agent to stay idle for a longer period, thereby reducing its reactivity and potential losses."
+  },
+  "_compiled": true
+}

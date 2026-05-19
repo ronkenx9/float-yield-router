@@ -1,0 +1,15 @@
+{
+  "type": "critic_review",
+  "agentId": "trader-c",
+  "timestamp": "2026-05-19T17:37:05.064Z",
+  "data": {
+    "version": 3,
+    "finding": "The current strategy is overly aggressive and reactive, resulting in reduced capital efficiency due to repeated withdrawals.",
+    "suggestedChanges": {
+      "cooldownAfterWithdrawSeconds": 720
+    },
+    "confidence": "medium",
+    "reasoning": "This change departs from previous suggestions, such as increasing maxActionsPerHour, as cooling down the withdrawal cooldown period aims to reduce the agent's over-reaction to market fluctuations. By increasing the cooldown period to 720 seconds, the agent will have a better chance to assess the market and make more informed decisions, resulting in improved capital efficiency."
+  },
+  "_compiled": true
+}

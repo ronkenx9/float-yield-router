@@ -1,0 +1,15 @@
+{
+  "type": "critic_review",
+  "agentId": "trader-a",
+  "timestamp": "2026-05-19T17:37:03.807Z",
+  "data": {
+    "version": 2,
+    "finding": "agent's aggressive mode may be causing it to act too quickly, potentially leading to reduced capital efficiency",
+    "suggestedChanges": {
+      "maxActionsPerHour": 7
+    },
+    "confidence": "medium",
+    "reasoning": "past versions of the strategy did not try reducing the maxActionsPerHour parameter, and this change could promote more thoughtful and deliberate decision-making without unduly restricting the agent's ability to adapt to changing conditions. A 50% reduction in maxActionsPerHour could help the agent balance its need for rapid adaptation with the need for more deliberate action."
+  },
+  "_compiled": true
+}

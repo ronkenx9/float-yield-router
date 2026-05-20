@@ -6,6 +6,8 @@
 
 *While your agents wait, your USDC earns. Park into USYC, recall in seconds.*
 
+[![npm](https://img.shields.io/npm/v/@floatrouter/sdk.svg?style=flat-square&color=cyan&label=%40floatrouter%2Fsdk)](https://www.npmjs.com/package/@floatrouter/sdk)
+[![License: MIT](https://img.shields.io/badge/license-MIT-white?style=flat-square)](./LICENSE)
 [![Built for Agora Agents 2026](https://img.shields.io/badge/built%20for-Agora%20Agents%202026-cyan?style=flat-square)](https://thecanteenapp.com)
 [![Settlement: Arc](https://img.shields.io/badge/settles%20on-Arc-blue?style=flat-square)](https://docs.arc.network)
 [![Yield: USYC](https://img.shields.io/badge/yield-USYC-emerald?style=flat-square)](https://developers.circle.com)

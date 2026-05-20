@@ -1,5 +1,8 @@
 # @floatrouter/sdk
 
+[![npm](https://img.shields.io/npm/v/@floatrouter/sdk.svg?style=flat-square&color=cyan)](https://www.npmjs.com/package/@floatrouter/sdk)
+[![License: MIT](https://img.shields.io/badge/license-MIT-white?style=flat-square)](../LICENSE)
+
 **Wrap any Circle Agent Wallet with yield-bearing idle USDC. One call. Ten minutes.**
 
 ```ts

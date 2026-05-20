@@ -1,6 +1,6 @@
 {
   "name": "@floatrouter/sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Yield middleware for Circle Agent Wallets. Wrap any agent, route idle USDC into USYC, recall in seconds on Arc.",
   "keywords": [
     "circle",

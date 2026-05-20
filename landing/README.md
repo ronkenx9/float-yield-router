@@ -95,21 +95,21 @@ The headline `"While you rest, your capital works."` bleeds across the bottom vo
 Uses the modern CSS grid-rows trick (`grid-template-rows: 0fr → 1fr`) for smooth height animation without JS measurement. Plus/minus icon swap, hairline border per item that brightens on `aria-expanded`.
 
 ### Footer
-Looped video backdrop (Cloudfront-hosted MP4) behind a four-layer overlay stack pushing focus to a giant italic `float` wordmark. Bookends the hero exactly — same font, same italic, same scale.
+Looped video backdrop (`/public/footer.mp4`) behind a four-layer overlay stack pushing focus to a giant italic `float` wordmark. Bookends the hero exactly — same font, same italic, same scale.
 
 ---
 
-## Adding the missing mascot images
+## Mascot images
 
-The MeetFlo section expects three mascot expressions in `public/`:
+The MeetFlo section ships three expressions from the Flo brand sheet in `public/`:
 
-| File             | State     | Notes                                                   |
-|------------------|-----------|---------------------------------------------------------|
-| `flo-calm.png`   | IDLE      | Already shipped — calm closed-eyes mascot               |
-| `flo-focused.png`| EXECUTING | Drop in — sharp/alert eyes (placeholder note shows if missing) |
-| `flo-happy.png`  | PARKED    | Drop in — smiling curved eyes (placeholder note shows if missing) |
+| File                | State     |
+|---------------------|-----------|
+| `flo-calm.png`      | IDLE      |
+| `flo-focused.jpeg`  | EXECUTING |
+| `flo-happy.jpeg`    | PARKED    |
 
-If `flo-focused.png` or `flo-happy.png` are missing, the `<img>` `onError` falls back to `flo-calm.png` and displays a small dev-style hint (`placeholder · drop X.png into /public`).
+If any are missing, `<img onError>` falls back to `flo-calm.png`.
 
 ---
 
@@ -148,15 +148,7 @@ npm run preview
 
 Current build size: **228 kB JS, 78 kB gzipped**. CSS is **17.7 kB, 4.5 kB gzipped**.
 
-The hero video (10.7 MB) and the footer CDN video (12.7 MB) are streamed, not bundled. The lazy-section image (4 MB) is downloaded lazily.
-
----
-
-## Asset URLs to swap before deploy
-
-- The footer video currently points to a Cloudfront URL hosted by another project. If you want the video local, download it and serve from `/public/`.
-- The `Get the SDK` CTA and `Star on GitHub` button both currently link to `https://github.com` — point them at your real repo.
-- The `X (Twitter)` social icon links to `https://x.com` — point it at the project handle.
+The hero video (~10.7 MB) and the footer video (~12.7 MB) live in `/public/` and are streamed by the browser, not bundled. The lazy-section image (~4 MB) is downloaded lazily.
 
 ---
 

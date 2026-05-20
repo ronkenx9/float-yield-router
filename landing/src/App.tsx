@@ -1394,13 +1394,12 @@ function Footer() {
             register as the hero, with stronger darkening here so the
             italic wordmark stays the focal point. */}
         <video
-          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260505_105838_084968f2-4415-42a4-971a-3bec54539549.mp4"
+          src="/footer.mp4"
           autoPlay
           muted
           loop
           playsInline
           preload="auto"
-          crossOrigin="anonymous"
           aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover z-0 select-none pointer-events-none"
         />

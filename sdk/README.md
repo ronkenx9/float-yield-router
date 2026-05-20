@@ -1,9 +1,9 @@
-# @float/sdk
+# @floatrouter/sdk
 
 **Wrap any Circle Agent Wallet with yield-bearing idle USDC. One call. Ten minutes.**
 
 ```ts
-import { wrapAgent } from '@float/sdk';
+import { wrapAgent } from '@floatrouter/sdk';
 
 const flo = wrapAgent(myAgent, { strategy: 'balanced', vault: 'USYC' });
 const safePay = flo.wrapPayment(executePayment);
@@ -17,11 +17,11 @@ That's it. The rest of this README is the long version.
 ## Install
 
 ```bash
-npm install @float/sdk
+npm install @floatrouter/sdk
 # or
-pnpm add @float/sdk
+pnpm add @floatrouter/sdk
 # or
-yarn add @float/sdk
+yarn add @floatrouter/sdk
 ```
 
 Peer requirements:
@@ -34,7 +34,7 @@ Peer requirements:
 ## Quickstart — five lines
 
 ```ts
-import { wrapAgent } from '@float/sdk';
+import { wrapAgent } from '@floatrouter/sdk';
 
 const myAgent = {
   walletId: 'a1b2c3d4-e5f6-…',   // your Circle Agent Wallet ID
@@ -164,7 +164,7 @@ This is the 6-step burn-attest-mint flow:
 The strategy preset chooses your **liquid reserve ratio** — but the SDK has more knobs internally, surfaced via the `FloatClient` primitive if you need them:
 
 ```ts
-import { FloatClient } from '@float/sdk';
+import { FloatClient } from '@floatrouter/sdk';
 
 const client = new FloatClient({
   vaultAddress:    '0xfAe6a9D5b0835ca7e9B090eCe0f57C14899BeDA6',
@@ -222,7 +222,7 @@ Re-run `circle wallet login --testnet`.
 Your in-memory `parkedBalance` cache is stale (another agent on the same wallet may have already withdrawn). The dashboard's adapter does a pre-flight RPC read to avoid this; if you're using the raw SDK, do the same:
 
 ```ts
-import { rpcCall } from '@float/sdk';
+import { rpcCall } from '@floatrouter/sdk';
 // eth_call vault.deposits(agent) before each withdraw
 ```
 

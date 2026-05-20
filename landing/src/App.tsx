@@ -1105,7 +1105,7 @@ function StatBig({ big, label, sub }: { big: string; label: string; sub: string 
 
 function StartCTA() {
   const [copied, setCopied] = useState(false);
-  const installCmd = 'npm install @float/sdk';
+  const installCmd = 'npm install @floatrouter/sdk';
 
   const copy = async () => {
     try {

@@ -20,7 +20,7 @@
 Every AI agent that touches a market has **idle moments** — between trades, between rebalances, between settlements. Today, that idle USDC earns 0%. FLOAT routes it into USYC (Circle's tokenized money market fund, ~5.15% APY) the moment your agent stops, and recalls it in under five seconds the moment it acts again. One SDK call wraps any Circle Agent Wallet. No new contracts to learn, no custody handoff, no manual sweeps.
 
 ```ts
-import { wrapAgent } from '@float/sdk';
+import { wrapAgent } from '@floatrouter/sdk';
 
 const floatedAgent = wrapAgent(myAgent, { strategy: 'balanced', vault: 'USYC' });
 const safePayment  = floatedAgent.wrapPayment(executePayment);
@@ -59,11 +59,11 @@ const safePayment  = floatedAgent.wrapPayment(executePayment);
 ### Wrap your agent (10 minutes)
 
 ```bash
-npm install @float/sdk
+npm install @floatrouter/sdk
 ```
 
 ```ts
-import { wrapAgent } from '@float/sdk';
+import { wrapAgent } from '@floatrouter/sdk';
 
 const myAgent = {
   walletId: 'a1b2c3d4-…',       // your Circle Agent Wallet ID

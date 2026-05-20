@@ -1,20 +1,61 @@
 {
-  "name": "sdk",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "name": "@floatrouter/sdk",
+  "version": "0.1.0",
+  "description": "Yield middleware for Circle Agent Wallets. Wrap any agent, route idle USDC into USYC, recall in seconds on Arc.",
+  "keywords": [
+    "circle",
+    "arc",
+    "usdc",
+    "usyc",
+    "yield",
+    "defi",
+    "agent",
+    "wallet",
+    "stablecoin"
+  ],
+  "homepage": "https://github.com/ronkenx9/float-yield-router#readme",
+  "bugs": {
+    "url": "https://github.com/ronkenx9/float-yield-router/issues"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ronkenx9/float-yield-router.git",
+    "directory": "sdk"
+  },
+  "license": "MIT",
+  "author": "FLOAT",
   "type": "module",
-  "devDependencies": {
-    "@types/node": "^25.8.0",
-    "typescript": "^6.0.3"
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js"
+    }
+  },
+  "files": [
+    "src/**/*.js",
+    "src/**/*.js.map",
+    "src/**/*.d.ts",
+    "src/**/*.d.ts.map",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "ethers": "^6.16.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.8.0",
+    "typescript": "^6.0.3"
   }
 }

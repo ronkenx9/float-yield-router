@@ -467,7 +467,7 @@ function BuiltWith() {
       <div className="absolute bottom-0 left-0 right-0 h-px bg-white/[0.08]" />
 
       {/* Section marker — top-left, matches the 02/03 typography rhythm */}
-      <div className="absolute top-12 left-10 z-10">
+      <div className="absolute top-8 sm:top-12 left-6 sm:left-10 z-10">
         <div className="flex items-baseline gap-4 text-white/40">
           <span className="font-body text-[10px] tracking-[0.35em] uppercase">01</span>
           <span className="h-px w-12 bg-white/20" />
@@ -479,7 +479,7 @@ function BuiltWith() {
 
       {/* Opposite-corner whisper — links out to the Canteen hackathon site.
           Subtle hover lift signals it's interactive without breaking the editorial tone. */}
-      <div className="absolute top-12 right-10 z-10 text-right">
+      <div className="absolute top-8 sm:top-12 right-6 sm:right-10 z-10 text-right">
         <a
           href="https://thecanteenapp.com"
           target="_blank"
@@ -494,25 +494,30 @@ function BuiltWith() {
         </a>
       </div>
 
-      {/* Centered trio */}
-      <div className="absolute inset-0 flex items-center justify-center px-10">
-        <div className="flex items-center gap-12 md:gap-20 lg:gap-32">
+      {/* Centered trio
+          Mobile: stack vertically with horizontal hairlines between names.
+          Desktop: original horizontal row with vertical hairlines. */}
+      <div className="absolute inset-0 flex items-center justify-center px-6 sm:px-10">
+        <div className="flex flex-col sm:flex-row items-center gap-8 sm:gap-12 md:gap-20 lg:gap-32">
           {stack.map((entry, i) => (
-            <div key={entry.name} className="flex items-center gap-12 md:gap-20 lg:gap-32">
+            <div
+              key={entry.name}
+              className="flex flex-col sm:flex-row items-center gap-8 sm:gap-12 md:gap-20 lg:gap-32"
+            >
               {i > 0 && (
                 <div
-                  className="h-16 w-px bg-white/10"
+                  className="h-px w-16 sm:h-16 sm:w-px bg-white/10"
                   aria-hidden="true"
                 />
               )}
               <div className="flex flex-col items-center text-center">
                 <span
                   className="font-heading italic text-white/85 leading-none"
-                  style={{ fontSize: 'clamp(48px, 6vw, 88px)' }}
+                  style={{ fontSize: 'clamp(42px, 6vw, 88px)' }}
                 >
                   {entry.name}
                 </span>
-                <span className="mt-4 font-body text-[10px] tracking-[0.3em] uppercase text-white/45">
+                <span className="mt-3 sm:mt-4 font-body text-[10px] tracking-[0.3em] uppercase text-white/45">
                   {entry.role}
                 </span>
               </div>
@@ -537,7 +542,7 @@ function Features() {
   return (
     <section
       id="capabilities"
-      className="relative bg-black px-10 py-28 overflow-hidden"
+      className="relative bg-black px-6 sm:px-10 py-20 sm:py-28 overflow-hidden"
     >
       {/* Section header — editorial title + sub */}
       <div className="max-w-7xl mx-auto">
@@ -685,7 +690,7 @@ function FeatureCard({
 }) {
   return (
     <article
-      className="group relative bg-black p-7 flex flex-col gap-5 transition-colors duration-200 hover:bg-white/[0.015]"
+      className="group relative bg-black p-5 sm:p-7 flex flex-col gap-5 transition-colors duration-200 hover:bg-white/[0.015]"
       style={{ borderRadius: 0, minHeight: '420px' }}
     >
       {/* Cyan top-edge accent — fades in on hover, the only color signal the card uses */}
@@ -761,7 +766,7 @@ function MeetFlo() {
   return (
     <section
       id="meet-flo"
-      className="relative bg-black px-10 py-28 overflow-hidden"
+      className="relative bg-black px-6 sm:px-10 py-20 sm:py-28 overflow-hidden"
       style={{ minHeight: '85vh' }}
     >
       <div className="max-w-7xl mx-auto h-full flex flex-col">
@@ -957,7 +962,7 @@ function LazySection() {
       {/* ════════════ Content layer ════════════ */}
 
       {/* Top-left: section marker + tight body */}
-      <div className="absolute top-28 left-10 z-20 max-w-[300px]">
+      <div className="absolute top-24 sm:top-28 left-6 sm:left-10 z-20 max-w-[260px] sm:max-w-[300px]">
         <div className="flex items-baseline gap-4 text-white/55">
           <span className="font-body text-[10px] tracking-[0.35em] uppercase">04</span>
           <span className="h-px w-12 bg-white/30" />
@@ -966,7 +971,7 @@ function LazySection() {
           </span>
         </div>
         <p
-          className="mt-6 text-white/80 text-[15px] font-body font-light leading-[1.55]"
+          className="mt-6 text-white/80 text-[14px] sm:text-[15px] font-body font-light leading-[1.55]"
           style={{ textShadow: '0 1px 8px rgba(0,0,0,0.7)' }}
         >
           Yield middleware for agents on Arc.
@@ -976,8 +981,9 @@ function LazySection() {
         </p>
       </div>
 
-      {/* Top-right: Aristotle epigraph (mirror of section marker) */}
-      <div className="absolute top-28 right-10 z-20 max-w-[260px] text-right">
+      {/* Top-right: Aristotle epigraph (mirror of section marker)
+          Hidden on mobile — would overlap the left block. */}
+      <div className="hidden md:block absolute top-28 right-10 z-20 max-w-[260px] text-right">
         <p
           className="font-heading italic text-white/70 text-[15px] leading-snug"
           style={{ textShadow: '0 1px 8px rgba(0,0,0,0.7)' }}
@@ -991,9 +997,10 @@ function LazySection() {
         </p>
       </div>
 
-      {/* Floating live-state pill — feels like it belongs near the cassettes */}
+      {/* Floating live-state pill — decorative artifact; hidden on mobile
+          where it would crash into the headline. */}
       <div
-        className="liquid-glass-strong absolute z-20 px-3.5 py-2 rounded flex items-center gap-2.5 text-xs font-body"
+        className="hidden sm:flex liquid-glass-strong absolute z-20 px-3.5 py-2 rounded items-center gap-2.5 text-xs font-body"
         style={{
           right: 'clamp(48px, 9vw, 140px)',
           top:   'clamp(220px, 32vh, 360px)',
@@ -1009,9 +1016,9 @@ function LazySection() {
         </span>
       </div>
 
-      {/* Floating yield ticker — opposite corner, like a found artifact */}
+      {/* Floating yield ticker — same story, hidden on mobile. */}
       <div
-        className="liquid-glass absolute z-20 px-3 py-1.5 rounded flex items-center gap-2 text-[11px] font-body"
+        className="hidden sm:flex liquid-glass absolute z-20 px-3 py-1.5 rounded items-center gap-2 text-[11px] font-body"
         style={{
           left: 'clamp(60px, 12vw, 220px)',
           top:  'clamp(360px, 50vh, 520px)',
@@ -1024,15 +1031,17 @@ function LazySection() {
         </span>
       </div>
 
-      {/* ────── Headline — bleeds across the bottom void ────── */}
+      {/* ────── Headline — bleeds across the bottom void
+          Clamp min was 96px which overflows a 375px phone. Dropped to
+          52px on mobile so it sits comfortably; desktop value untouched. */}
       <h2
-        className="absolute z-20 left-8 right-8 pointer-events-none"
+        className="absolute z-20 left-6 right-6 sm:left-8 sm:right-8 pointer-events-none"
         style={{
           bottom: 'clamp(28px, 5vh, 72px)',
           fontFamily: "'Instrument Serif', serif",
           fontStyle: 'italic',
-          fontSize: 'clamp(96px, 15vw, 220px)',
-          lineHeight: 0.88,
+          fontSize: 'clamp(52px, 13vw, 220px)',
+          lineHeight: 0.92,
           letterSpacing: '-0.02em',
           color: '#fff',
         }}
@@ -1054,10 +1063,10 @@ function NumbersStrip() {
   // No top border on this section — LazySection's z-30 bottom hairline
   // already marks the boundary; doubling them up creates a thicker line.
   return (
-    <section id="numbers" className="relative bg-black py-28 px-10 scroll-mt-24">
+    <section id="numbers" className="relative bg-black py-20 sm:py-28 px-6 sm:px-10 scroll-mt-24">
       <div className="max-w-6xl mx-auto">
         {/* Tiny header — continuation marker */}
-        <div className="flex items-baseline gap-4 text-white/40 mb-16">
+        <div className="flex items-baseline gap-4 text-white/40 mb-12 sm:mb-16">
           <span className="font-body text-[10px] tracking-[0.35em] uppercase">05</span>
           <span className="h-px w-12 bg-white/20" />
           <span className="font-body text-[10px] tracking-[0.35em] uppercase">
@@ -1072,12 +1081,12 @@ function NumbersStrip() {
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="mt-32 max-w-6xl mx-auto flex items-end justify-between">
+      {/* Footer — stacks on mobile, opposite-end on desktop */}
+      <div className="mt-20 sm:mt-32 max-w-6xl mx-auto flex flex-col sm:flex-row gap-3 sm:gap-4 sm:items-end sm:justify-between">
         <p className="text-[10px] tracking-[0.3em] uppercase text-white/40">
           FLOAT · Yield middleware for Arc agents · Built for Agora Agents Hackathon
         </p>
-        <p className="text-[10px] tracking-[0.3em] uppercase text-white/40">
+        <p className="text-[10px] tracking-[0.3em] uppercase text-white/40 sm:text-right">
           Circle · USYC · Arc · 2026
         </p>
       </div>
@@ -1131,7 +1140,7 @@ function StartCTA() {
   return (
     <section
       id="start"
-      className="relative bg-black px-10 py-32 overflow-hidden"
+      className="relative bg-black px-6 sm:px-10 py-24 sm:py-32 overflow-hidden"
     >
       {/* Cyan radial glow — pulled from the banner palette */}
       <div
@@ -1171,24 +1180,26 @@ function StartCTA() {
           Park into USYC, recall in under five seconds.
         </p>
 
-        {/* Install command pill */}
+        {/* Install command pill
+            Mobile: font drops to 12px and inline padding tightens so the
+            full command + copy chip fits a 375px viewport without overflow. */}
         <button
           onClick={copy}
-          className="liquid-glass hover-cyan-glow group mt-12 inline-flex items-center gap-3 rounded px-5 py-4 font-mono text-[14px] text-left active:scale-[0.985] transition-all duration-150"
+          className="liquid-glass hover-cyan-glow group mt-12 inline-flex items-center gap-2 sm:gap-3 rounded px-3 sm:px-5 py-3 sm:py-4 font-mono text-[12px] sm:text-[14px] text-left active:scale-[0.985] transition-all duration-150 max-w-full"
           aria-label="Copy install command"
         >
           <span className="text-white/35 select-none">$</span>
-          <span className="text-white/95">{installCmd}</span>
-          <span className="ml-3 inline-flex items-center gap-1.5 text-[11px] tracking-[0.2em] uppercase text-white/45 group-hover:text-white/85 transition-colors duration-150">
+          <span className="text-white/95 truncate">{installCmd}</span>
+          <span className="ml-1 sm:ml-3 inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-white/45 group-hover:text-white/85 transition-colors duration-150 shrink-0">
             {copied ? (
               <>
                 <Check className="w-3.5 h-3.5" strokeWidth={2.25} />
-                copied
+                <span className="hidden sm:inline">copied</span>
               </>
             ) : (
               <>
                 <Copy className="w-3.5 h-3.5" strokeWidth={2.25} />
-                copy
+                <span className="hidden sm:inline">copy</span>
               </>
             )}
           </span>
@@ -1266,7 +1277,7 @@ function FAQSection() {
   const [openIdx, setOpenIdx] = useState<number | null>(0);
 
   return (
-    <section id="questions" className="relative bg-black px-10 py-28">
+    <section id="questions" className="relative bg-black px-6 sm:px-10 py-20 sm:py-28">
       <div className="max-w-3xl mx-auto">
         <div className="flex items-baseline gap-4 text-white/40 mb-12">
           <span className="font-body text-[10px] tracking-[0.35em] uppercase">06</span>
@@ -1323,12 +1334,12 @@ function FAQItem({
     >
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between gap-6 py-6 text-left group"
+        className="w-full flex items-center justify-between gap-3 sm:gap-6 py-5 sm:py-6 text-left group"
         aria-expanded={isOpen}
       >
         <span
           className={
-            'font-body text-[17px] leading-snug transition-colors duration-200 ' +
+            'font-body text-[15px] sm:text-[17px] leading-snug transition-colors duration-200 ' +
             (isOpen ? 'text-white' : 'text-white/85 group-hover:text-white')
           }
         >
@@ -1444,7 +1455,7 @@ function Footer() {
         <div className="absolute top-0 left-0 right-0 h-px bg-white/[0.10] z-[2]" />
 
         {/* Section marker */}
-        <div className="absolute top-12 left-10 z-10">
+        <div className="absolute top-8 sm:top-12 left-6 sm:left-10 z-10">
           <div className="flex items-baseline gap-4 text-white/40">
             <span className="font-body text-[10px] tracking-[0.35em] uppercase">09</span>
             <span className="h-px w-12 bg-white/20" />
@@ -1453,7 +1464,7 @@ function Footer() {
         </div>
 
         {/* Opposite-corner micro-attribution (matches earlier sections' diagonal) */}
-        <div className="absolute top-12 right-10 z-10 text-right">
+        <div className="absolute top-8 sm:top-12 right-6 sm:right-10 z-10 text-right">
           <p className="font-body text-[10px] tracking-[0.35em] uppercase text-white/30">
             yield middleware · 2026
           </p>
@@ -1467,11 +1478,13 @@ function Footer() {
           </div>
 
           {/* THE wordmark — same family as the hero title, same italic, scaled
-              wide. Bookends the page opening exactly. */}
+              wide. Bookends the page opening exactly.
+              Clamp min dropped from 140 -> 84 so it fits a 375px viewport
+              (140px italic 'float' is wider than the phone). */}
           <h2
             className="font-heading italic text-white select-none leading-none"
             style={{
-              fontSize: 'clamp(140px, 24vw, 380px)',
+              fontSize: 'clamp(84px, 24vw, 380px)',
               letterSpacing: '-0.025em',
             }}
           >
@@ -1507,7 +1520,7 @@ function Footer() {
       </section>
 
       {/* ── Utility bar ── */}
-      <div className="relative border-t border-white/[0.08] px-10 py-7">
+      <div className="relative border-t border-white/[0.08] px-6 sm:px-10 py-7">
         <div className="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-y-5 gap-x-8">
           {/* Left — anchor nav */}
           <nav className="flex items-center gap-x-6 gap-y-2 flex-wrap">

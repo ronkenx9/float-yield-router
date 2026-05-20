@@ -30,6 +30,9 @@ html, body {
   color: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Defensive: prevent any single oversized element (giant italic wordmarks,
+     mono traces, etc.) from triggering page-wide horizontal scroll on mobile. */
+  overflow-x: hidden;
 }
 
 /* ──────────── Brand hover system ────────────

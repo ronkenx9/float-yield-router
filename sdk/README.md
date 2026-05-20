@@ -27,10 +27,18 @@ pnpm add @floatrouter/sdk
 yarn add @floatrouter/sdk
 ```
 
+> ⚠ **`@floatrouter/sdk` is ESM-only.** A fresh `npm init -y` defaults to CommonJS, which will fail to import this package with `TS1479` / `ERR_REQUIRE_ESM`. Fix one of two ways:
+>
+> 1. **Set `"type": "module"`** in your `package.json` (and use `.js` files with ES `import` syntax), or
+> 2. **Use the `.mjs` extension** on the file that imports from the SDK.
+>
+> If you're using TypeScript, also set `"module": "NodeNext"` and `"moduleResolution": "NodeNext"` in `tsconfig.json`.
+
 Peer requirements:
-- Node.js 18+ (uses native `fetch`)
-- A logged-in Circle Agent Wallet CLI session (`circle wallet login --testnet`)
+- **Node.js 18+** (uses native `fetch`)
+- **Circle Wallet CLI**, logged in. Install: see [Circle's CLI docs](https://developers.circle.com/w3s/docs/programmable-wallets-cli). Verify with `circle whoami`, then run `circle wallet login --testnet` once before using the SDK.
 - (Optional) `CIRCLE_API_KEY` env var if you want the HTTP submission path
+- (One-time) `circle terms accept` — the SDK will never accept Circle's Terms on your behalf, by design
 
 ---
 
@@ -103,22 +111,35 @@ Currently only `'USYC'` is supported. Future vaults will land here.
 
 ### `flo.wrapPayment(executor)`
 
-The most useful method. Wraps any payment function so it auto-recalls from the vault if your liquid balance is short.
+The most useful method. Wraps **any payment function you already have** so it auto-recalls from the vault if your liquid balance is short.
+
+`executor` is a function *you write* that performs the actual payment using whatever method you prefer — Circle CLI, ethers.js, viem, fetch to a custom endpoint, anything. FLOAT doesn't dictate how you move USDC; it just guarantees the wallet has the balance before your code runs.
 
 ```ts
-async function executePayment(amount: number, recipient: string) {
-  // your existing payment logic — direct USDC transfer, payroll, etc.
-  return myAgent.transfer(recipient, amount);
+import { wrapAgent } from '@floatrouter/sdk';
+
+const flo = wrapAgent(myAgent, { strategy: 'balanced', vault: 'USYC' });
+
+// 1. Define your existing payment logic. The shape is up to you —
+//    whatever args you need, returning whatever your downstream wants.
+async function payVendor(amount: number, recipient: string) {
+  // ↓ Your real payment code goes here. Examples:
+  //     - call your existing Circle CLI / ethers helper
+  //     - hit a backend endpoint that handles the on-chain submit
+  //     - use flo.adapter directly: await flo.adapter.transfer(recipient, amount)
+  console.log(`paying ${amount} USDC to ${recipient}`);
 }
 
-const safePay = flo.wrapPayment(executePayment);
+// 2. Wrap it. The wrapped fn has the same signature as the original.
+const safePay = flo.wrapPayment(payVendor);
 
-await safePay(50.00, '0xRecipient');
-//  ↑ if wallet has less than $50, FLOAT recalls the deficit from the
-//    vault first, waits for confirmation, then runs `executePayment`.
+// 3. Call it like normal. FLOAT will recall from USYC first if needed.
+await safePay(50, '0xRecipient');
+//  ↑ if wallet has < $50 liquid, FLOAT recalls the deficit from the
+//    vault, waits for confirmation, then runs `payVendor`.
 ```
 
-Recall is a **single onchain instruction** on Arc — typically <5 seconds end-to-end. If the vault has insufficient deposits to cover the deficit, the payment throws *before* attempting the transfer.
+Recall is a **single onchain instruction** on Arc — typically <5 seconds end-to-end. If the vault has insufficient deposits to cover the deficit, the wrapped fn throws *before* attempting the payment, so you never get a half-completed state.
 
 ---
 
@@ -179,7 +200,7 @@ const client = new FloatClient({
 });
 ```
 
-Inside the dashboard (`dashboard/src/lib/float/PolicyEngine.ts`), there's a full scoring engine with these inputs:
+Inside the dashboard ([`dashboard/src/lib/float/PolicyEngine.ts`](https://github.com/ronkenx9/float-yield-router/blob/main/dashboard/src/lib/float/PolicyEngine.ts)), there's a full scoring engine with these inputs:
 
 | Input                       | Effect                                                          |
 |-----------------------------|-----------------------------------------------------------------|
@@ -197,16 +218,18 @@ If you're using the dashboard's full orchestrator (rather than just the SDK), th
 
 ## Examples
 
-See [`examples/wrapAgentDemo.ts`](./examples/wrapAgentDemo.ts) for the canonical 10-line integration.
+See [`examples/wrapAgentDemo.ts`](https://github.com/ronkenx9/float-yield-router/blob/main/sdk/examples/wrapAgentDemo.ts) for the canonical 10-line integration.
 
-For end-to-end onchain tests:
-- [`test-e2e-arc.ts`](./test-e2e-arc.ts) — full park + withdraw + payment cycle against Arc Testnet
-- [`test-e2e-vault.ts`](./test-e2e-vault.ts) — vault-only cycle (no payment), proves approve→park→recall
+For end-to-end onchain tests (you'll need a logged-in Circle CLI session + an Arc Testnet wallet):
+- [`test-e2e-arc.ts`](https://github.com/ronkenx9/float-yield-router/blob/main/sdk/test-e2e-arc.ts) — full park + withdraw + payment cycle against Arc Testnet
+- [`test-e2e-vault.ts`](https://github.com/ronkenx9/float-yield-router/blob/main/sdk/test-e2e-vault.ts) — vault-only cycle (no payment), proves approve → park → recall
 
-Run them with:
+To run them locally, clone the repo first:
 
 ```bash
-npm run build
+git clone https://github.com/ronkenx9/float-yield-router.git
+cd float-yield-router/sdk
+npm install && npm run build
 node test-e2e-arc.js
 ```
 
@@ -245,4 +268,4 @@ Pre-1.0. APIs may change between minor versions.
 
 ## License
 
-MIT — see [LICENSE](../LICENSE) at the repo root.
+MIT — see [LICENSE](https://github.com/ronkenx9/float-yield-router/blob/main/LICENSE) at the repo root.

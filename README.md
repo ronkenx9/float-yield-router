@@ -64,6 +64,8 @@ const safePayment  = floatedAgent.wrapPayment(executePayment);
 npm install @floatrouter/sdk
 ```
 
+> ⚠ The SDK is ESM-only. Set `"type": "module"` in your `package.json` (or use a `.mjs` file) before importing.
+
 ```ts
 import { wrapAgent } from '@floatrouter/sdk';
 
@@ -78,9 +80,12 @@ const flo = wrapAgent(myAgent, {
   vault:    'USYC',
 });
 
-// Wrap any payment to make it yield-aware
+// Wrap any payment fn YOU already have. The body is your code — Circle
+// CLI, ethers, viem, a backend call, anything. FLOAT just guarantees
+// the wallet has the balance before your fn runs.
 const pay = flo.wrapPayment(async (amount, to) => {
-  await myAgent.transfer(to, amount);
+  // ↓ your real payment logic here
+  console.log(`paying ${amount} USDC to ${to}`);
 });
 
 await pay(50.00, '0xRecipient');  // FLOAT auto-recalls from USYC if short
@@ -99,7 +104,7 @@ await flo.gatewayRecall({
 //  ↑ 6-step burn-attest-mint via Circle Gateway, ~500ms cross-chain settle.
 ```
 
-Full SDK reference: [`sdk/README.md`](./sdk/README.md).
+Full SDK reference: [`sdk/README.md`](https://github.com/ronkenx9/float-yield-router/blob/main/sdk/README.md).
 
 ---
 

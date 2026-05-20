@@ -337,26 +337,31 @@ function Hero() {
         <h1 className="hero-title select-none">float</h1>
       </div>
 
-      {/* Bottom row */}
+      {/* Bottom row
+          ───────────────────────────────────────────────────────────────
+          Desktop: 3-col layout (left tagline · centered CTAs · right tagline).
+          Mobile: side taglines hidden, CTA cluster stacks vertically and
+          centers in the viewport — fits a 375px-wide phone without horizontal
+          scroll or overlapping with the "scroll" hint. */}
       <div
         className={
-          'absolute bottom-12 left-0 right-0 px-10 flex items-end justify-between z-20 transition-all duration-1000 delay-300 ease-out ' +
+          'absolute bottom-10 sm:bottom-12 left-0 right-0 px-6 sm:px-10 flex items-end justify-between z-20 transition-all duration-1000 delay-300 ease-out ' +
           (mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6')
         }
       >
-        <p className="text-sm font-body font-light text-white/75 max-w-[240px] leading-relaxed">
+        <p className="hidden md:block text-sm font-body font-light text-white/75 max-w-[240px] leading-relaxed">
           While your agents wait, your USDC earns.
           Yield middleware for the post-CLI world.
         </p>
 
-        <div className="absolute left-1/2 -translate-x-1/2 bottom-0 flex items-center gap-3">
+        <div className="w-full md:w-auto md:absolute md:left-1/2 md:-translate-x-1/2 md:bottom-0 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
           <a
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover-cyan-glow group relative bg-white text-black text-sm font-body font-medium rounded px-6 py-3 overflow-hidden active:scale-[0.97] transition-all duration-200 hover:scale-[1.03]"
+            className="hover-cyan-glow group relative bg-white text-black text-sm font-body font-medium rounded px-6 py-3 overflow-hidden active:scale-[0.97] transition-all duration-200 hover:scale-[1.03] text-center"
           >
-            <span className="relative z-10 inline-flex items-center gap-1.5">
+            <span className="relative z-10 inline-flex items-center justify-center gap-1.5">
               Get the SDK
               <ArrowUpRight className="w-4 h-4" strokeWidth={2.25} />
             </span>
@@ -365,21 +370,21 @@ function Hero() {
 
           <a
             href="#demo"
-            className="liquid-glass hover-cyan-glow group text-white text-sm font-body font-medium rounded px-6 py-3 active:scale-[0.97] transition-all duration-200 hover:scale-[1.03]"
+            className="liquid-glass hover-cyan-glow group text-white text-sm font-body font-medium rounded px-6 py-3 active:scale-[0.97] transition-all duration-200 hover:scale-[1.03] text-center"
           >
             <span className="relative z-10">Watch it work</span>
           </a>
         </div>
 
-        <p className="text-sm font-body font-light text-white/75 max-w-[240px] leading-relaxed text-right">
+        <p className="hidden md:block text-sm font-body font-light text-white/75 max-w-[240px] leading-relaxed text-right">
           Park into USYC in one call.{' '}
           <em className="not-italic text-flo-cyan" style={{ fontStyle: 'italic', fontFamily: 'Instrument Serif, serif' }}>Recall</em>{' '}
           in seconds, settled on Arc.
         </p>
       </div>
 
-      {/* Scroll hint */}
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10 text-[10px] uppercase tracking-[0.3em] text-white/40 font-body">
+      {/* Scroll hint — hidden on mobile where space is tight */}
+      <div className="hidden sm:block absolute bottom-2 left-1/2 -translate-x-1/2 z-10 text-[10px] uppercase tracking-[0.3em] text-white/40 font-body">
         scroll
       </div>
     </section>
@@ -392,10 +397,13 @@ function Hero() {
 
 function FixedNav() {
   return (
-    <nav className="fixed top-5 left-1/2 -translate-x-1/2 z-50 whitespace-nowrap">
-      <div className="liquid-glass flex items-center gap-6 rounded px-4 py-2.5">
+    <nav className="fixed top-5 left-1/2 -translate-x-1/2 z-50 whitespace-nowrap max-w-[calc(100vw-1.5rem)]">
+      <div className="liquid-glass flex items-center gap-3 sm:gap-6 rounded px-3 sm:px-4 py-2 sm:py-2.5">
         <LogoMark />
-        <div className="flex items-center gap-5">
+
+        {/* Section anchor links — hidden on mobile to keep the pill from
+            overflowing a 375px viewport. */}
+        <div className="hidden md:flex items-center gap-5">
           {NAV_LINKS.map((link) => (
             <a
               key={link.label}
@@ -407,19 +415,22 @@ function FixedNav() {
             </a>
           ))}
         </div>
-        <div className="flex items-center gap-3 ml-4">
+
+        <div className="flex items-center gap-2 sm:gap-3 md:ml-4">
+          {/* GitHub: icon-only on mobile to save space, icon + label on desktop */}
           <a
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="GitHub"
             className="text-sm font-body font-light text-white/70 hover:text-flo-cyan transition-colors duration-200 inline-flex items-center gap-1.5"
           >
-            <Github className="w-3.5 h-3.5" strokeWidth={2} />
-            GitHub
+            <Github className="w-4 h-4 sm:w-3.5 sm:h-3.5" strokeWidth={2} />
+            <span className="hidden sm:inline">GitHub</span>
           </a>
           <a
             href="#start"
-            className="liquid-glass-strong hover-cyan-glow text-sm font-body font-medium text-white rounded px-4 py-1.5 transition-all duration-200 hover:scale-[1.04] active:scale-[0.97]"
+            className="liquid-glass-strong hover-cyan-glow text-xs sm:text-sm font-body font-medium text-white rounded px-3 sm:px-4 py-1.5 transition-all duration-200 hover:scale-[1.04] active:scale-[0.97]"
           >
             <span className="relative z-10">Get started</span>
           </a>

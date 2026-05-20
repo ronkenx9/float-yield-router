@@ -9,11 +9,15 @@
     <title>FLOAT — Yield middleware for agents on Arc</title>
     <meta name="description" content="While your agents wait, your USDC earns. FLOAT routes idle capital into USYC and recalls in seconds. Built on Arc." />
 
-    <!-- Open Graph (Facebook, LinkedIn, Discord, Slack, iMessage…) -->
+    <!-- Open Graph (Facebook, LinkedIn, Discord, Slack, iMessage…)
+         NOTE: og:image MUST be an absolute URL. Most scrapers (X, Discord,
+         iMessage) won't resolve relative paths and render a broken-image
+         placeholder when you give them /og.png alone. -->
     <meta property="og:type"        content="website" />
+    <meta property="og:url"         content="https://float-yield-router.vercel.app/" />
     <meta property="og:title"       content="FLOAT — Yield middleware for agents on Arc" />
     <meta property="og:description" content="While your agents wait, your USDC earns. Park idle USDC into USYC in one call. Recall in seconds, settled on Arc." />
-    <meta property="og:image"       content="/og.png" />
+    <meta property="og:image"       content="https://float-yield-router.vercel.app/og.png" />
     <meta property="og:image:width"  content="1981" />
     <meta property="og:image:height" content="793" />
     <meta property="og:image:alt"    content="FLOAT — yield middleware for agents on Arc" />
@@ -25,7 +29,7 @@
     <meta name="twitter:creator"     content="@floatrouter" />
     <meta name="twitter:title"       content="FLOAT — Yield middleware for agents on Arc" />
     <meta name="twitter:description" content="While your agents wait, your USDC earns. Park into USYC, recall in seconds on Arc." />
-    <meta name="twitter:image"       content="/og.png" />
+    <meta name="twitter:image"       content="https://float-yield-router.vercel.app/og.png" />
   </head>
   <body class="bg-black">
     <div id="root"></div>

@@ -1142,20 +1142,74 @@ function StartCTA() {
       id="start"
       className="relative bg-black px-6 sm:px-10 py-24 sm:py-32 overflow-hidden"
     >
-      {/* Cyan radial glow — pulled from the banner palette */}
+      {/* ── Background stack ──────────────────────────────────────
+          Motion-blur runner image: the visual rhyme for FLOAT —
+          always in motion, never idle. Treated heavily so the install
+          pill and CTAs stay legible at all viewport sizes. */}
+
+      {/* Layer 1 — the photo itself.
+          `object-bottom` keeps the runner's feet anchored low so the
+          composition reads as "moving forward" rather than centered. */}
+      <img
+        src="/start-bg.png"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover object-bottom pointer-events-none select-none"
+      />
+
+      {/* Cyan glow mask — soft radial bloom that drapes brand color over
+          the image without darkening it. Two stacked radials at different
+          positions/sizes give the bloom an organic, non-circular shape. */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none mix-blend-screen"
         style={{
           background:
-            'radial-gradient(ellipse 60% 70% at 50% 55%, rgba(80, 200, 220, 0.14) 0%, rgba(0,0,0,0) 60%)',
+            'radial-gradient(ellipse 70% 60% at 50% 45%, rgba(123, 224, 255, 0.32) 0%, rgba(123, 224, 255, 0.10) 40%, rgba(0,0,0,0) 75%)',
         }}
       />
-      {/* Soft secondary cool wash */}
+      <div
+        className="absolute inset-0 pointer-events-none mix-blend-screen"
+        style={{
+          background:
+            'radial-gradient(ellipse 45% 50% at 30% 70%, rgba(123, 224, 255, 0.22) 0%, rgba(0,0,0,0) 70%)',
+        }}
+      />
+
+      {/* Top fade — eases entry from the FAQ section above so the runner
+          image doesn't hit a hard edge. */}
+      <div
+        className="absolute inset-x-0 top-0 h-20 sm:h-24 pointer-events-none"
+        style={{
+          background: 'linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)',
+        }}
+      />
+
+      {/* Bottom fade — mirrors the top fade so both edges of the section
+          ease symmetrically into black. */}
+      <div
+        className="absolute inset-x-0 bottom-0 h-20 sm:h-24 pointer-events-none"
+        style={{
+          background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%)',
+        }}
+      />
+
+      {/* Text-area vignette — dark elliptical plate behind the content
+          column only. Pulls the image down where the type sits without
+          dimming the whole section. */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse at 20% 100%, rgba(40, 80, 200, 0.10) 0%, rgba(0,0,0,0) 50%)',
+            'radial-gradient(ellipse 55% 60% at 50% 50%, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0) 80%)',
+        }}
+      />
+
+      {/* Headline halo — subtle non-blended cyan behind the type. */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 40% 35% at 50% 40%, rgba(123, 224, 255, 0.10) 0%, rgba(0,0,0,0) 70%)',
         }}
       />
 
@@ -1168,14 +1222,22 @@ function StartCTA() {
 
         <h2
           className="font-heading italic text-white"
-          style={{ fontSize: 'clamp(56px, 8vw, 132px)', lineHeight: 0.95, letterSpacing: '-0.02em' }}
+          style={{
+            fontSize: 'clamp(56px, 8vw, 132px)',
+            lineHeight: 0.95,
+            letterSpacing: '-0.02em',
+            textShadow: '0 2px 24px rgba(0,0,0,0.65), 0 1px 3px rgba(0,0,0,0.45)',
+          }}
         >
           Ready to make idle
           <br />
           USDC work?
         </h2>
 
-        <p className="mt-8 max-w-xl mx-auto text-white/65 text-lg font-body font-light leading-relaxed">
+        <p
+          className="mt-8 max-w-xl mx-auto text-white/80 text-lg font-body font-light leading-relaxed"
+          style={{ textShadow: '0 1px 12px rgba(0,0,0,0.6)' }}
+        >
           Install in one command. Wrap any Circle Agent Wallet.
           Park into USYC, recall in under five seconds.
         </p>

@@ -359,20 +359,21 @@ function Hero() {
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover-cyan-glow group relative bg-white text-black text-sm font-body font-medium rounded px-6 py-3 overflow-hidden active:scale-[0.97] transition-all duration-200 hover:scale-[0.97] text-center"
+            className="hover-cyan-glow group relative bg-white text-black hover:text-white text-sm font-body font-medium rounded px-6 py-3 overflow-hidden active:scale-[0.97] transition-all duration-200 hover:scale-[0.97] text-center"
           >
             <span className="relative z-10 inline-flex items-center justify-center gap-1.5">
               Get the SDK
               <ArrowUpRight className="w-4 h-4" strokeWidth={2.25} />
             </span>
-            <span className="absolute inset-0 bg-gradient-to-b from-white to-white/85 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+            <span className="absolute inset-0 bg-[color:var(--flo-blue)] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
           </a>
 
           <a
             href="#demo"
-            className="liquid-glass hover-cyan-glow group text-white text-sm font-body font-medium rounded px-6 py-3 active:scale-[0.97] transition-all duration-200 hover:scale-[0.97] text-center"
+            className="liquid-glass hover-cyan-glow group relative overflow-hidden text-white text-sm font-body font-medium rounded px-6 py-3 active:scale-[0.97] transition-all duration-200 hover:scale-[0.97] text-center"
           >
             <span className="relative z-10">Watch it work</span>
+            <span className="absolute inset-0 bg-[color:var(--flo-blue)] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
           </a>
         </div>
 
@@ -430,9 +431,10 @@ function FixedNav() {
           </a>
           <a
             href="#start"
-            className="liquid-glass-strong hover-cyan-glow text-xs sm:text-sm font-body font-medium text-white rounded px-3 sm:px-4 py-1.5 transition-all duration-200 hover:scale-[0.97] active:scale-[0.97]"
+            className="liquid-glass-strong hover-cyan-glow group relative overflow-hidden text-[11px] sm:text-xs font-body font-medium text-white rounded px-2.5 sm:px-3 py-1 sm:py-1.5 transition-all duration-200 hover:scale-[0.97] active:scale-[0.97]"
           >
             <span className="relative z-10">Get started</span>
+            <span className="absolute inset-0 bg-[color:var(--flo-blue)] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
           </a>
         </div>
       </div>
@@ -1273,25 +1275,26 @@ function StartCTA() {
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover-cyan-glow group relative bg-white text-black text-sm font-body font-medium rounded px-6 py-3 overflow-hidden active:scale-[0.97] transition-all duration-200 hover:scale-[0.97]"
+            className="hover-cyan-glow group relative bg-white text-black hover:text-white text-sm font-body font-medium rounded px-6 py-3 overflow-hidden active:scale-[0.97] transition-all duration-200 hover:scale-[0.97]"
           >
             <span className="relative z-10 inline-flex items-center gap-1.5">
               Get the SDK
               <ArrowUpRight className="w-4 h-4" strokeWidth={2.25} />
             </span>
-            <span className="absolute inset-0 bg-gradient-to-b from-white to-white/85 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+            <span className="absolute inset-0 bg-[color:var(--flo-blue)] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
           </a>
 
           <a
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="liquid-glass hover-cyan-glow group text-white text-sm font-body font-medium rounded px-6 py-3 active:scale-[0.97] transition-all duration-200 hover:scale-[0.97]"
+            className="liquid-glass hover-cyan-glow group relative overflow-hidden text-white text-sm font-body font-medium rounded px-6 py-3 active:scale-[0.97] transition-all duration-200 hover:scale-[0.97]"
           >
             <span className="relative z-10 inline-flex items-center gap-1.5">
               <Star className="w-3.5 h-3.5" strokeWidth={2.25} />
               Star on GitHub
             </span>
+            <span className="absolute inset-0 bg-[color:var(--flo-blue)] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
           </a>
         </div>
 

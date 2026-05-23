@@ -359,7 +359,7 @@ function Hero() {
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover-cyan-glow group relative bg-white text-black text-sm font-body font-medium rounded px-6 py-3 overflow-hidden active:scale-[0.97] transition-all duration-200 hover:scale-[1.03] text-center"
+            className="hover-cyan-glow group relative bg-white text-black text-sm font-body font-medium rounded px-6 py-3 overflow-hidden active:scale-[0.97] transition-all duration-200 hover:scale-[0.97] text-center"
           >
             <span className="relative z-10 inline-flex items-center justify-center gap-1.5">
               Get the SDK
@@ -370,7 +370,7 @@ function Hero() {
 
           <a
             href="#demo"
-            className="liquid-glass hover-cyan-glow group text-white text-sm font-body font-medium rounded px-6 py-3 active:scale-[0.97] transition-all duration-200 hover:scale-[1.03] text-center"
+            className="liquid-glass hover-cyan-glow group text-white text-sm font-body font-medium rounded px-6 py-3 active:scale-[0.97] transition-all duration-200 hover:scale-[0.97] text-center"
           >
             <span className="relative z-10">Watch it work</span>
           </a>
@@ -409,7 +409,7 @@ function FixedNav() {
               key={link.label}
               href={link.href}
               {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-              className="text-sm font-body font-light text-white/70 hover:text-flo-cyan transition-colors duration-200"
+              className="text-sm font-body font-light text-white/70 hover:text-flo-blue transition-colors duration-200"
             >
               {link.label}
             </a>
@@ -423,14 +423,14 @@ function FixedNav() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
-            className="text-sm font-body font-light text-white/70 hover:text-flo-cyan transition-colors duration-200 inline-flex items-center gap-1.5"
+            className="text-sm font-body font-light text-white/70 hover:text-flo-blue transition-colors duration-200 inline-flex items-center gap-1.5"
           >
             <Github className="w-4 h-4 sm:w-3.5 sm:h-3.5" strokeWidth={2} />
             <span className="hidden sm:inline">GitHub</span>
           </a>
           <a
             href="#start"
-            className="liquid-glass-strong hover-cyan-glow text-xs sm:text-sm font-body font-medium text-white rounded px-3 sm:px-4 py-1.5 transition-all duration-200 hover:scale-[1.04] active:scale-[0.97]"
+            className="liquid-glass-strong hover-cyan-glow text-xs sm:text-sm font-body font-medium text-white rounded px-3 sm:px-4 py-1.5 transition-all duration-200 hover:scale-[0.97] active:scale-[0.97]"
           >
             <span className="relative z-10">Get started</span>
           </a>
@@ -484,7 +484,7 @@ function BuiltWith() {
           href="https://thecanteenapp.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="group inline-flex items-baseline gap-1.5 font-body text-[10px] tracking-[0.35em] uppercase text-white/30 hover:text-flo-cyan transition-colors duration-200"
+          className="group inline-flex items-baseline gap-1.5 font-body text-[10px] tracking-[0.35em] uppercase text-white/30 hover:text-flo-blue transition-colors duration-200"
         >
           <span>Agora Agents · 2026</span>
           <ArrowUpRight
@@ -843,7 +843,7 @@ function FloHead({
           src={displaySrc}
           alt={`Flo · ${label}`}
           onError={() => setErrored(true)}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[0.97]"
         />
         {/* Floor reflection / fade */}
         <div
@@ -1273,7 +1273,7 @@ function StartCTA() {
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover-cyan-glow group relative bg-white text-black text-sm font-body font-medium rounded px-6 py-3 overflow-hidden active:scale-[0.97] transition-all duration-200 hover:scale-[1.03]"
+            className="hover-cyan-glow group relative bg-white text-black text-sm font-body font-medium rounded px-6 py-3 overflow-hidden active:scale-[0.97] transition-all duration-200 hover:scale-[0.97]"
           >
             <span className="relative z-10 inline-flex items-center gap-1.5">
               Get the SDK
@@ -1286,7 +1286,7 @@ function StartCTA() {
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="liquid-glass hover-cyan-glow group text-white text-sm font-body font-medium rounded px-6 py-3 active:scale-[0.97] transition-all duration-200 hover:scale-[1.03]"
+            className="liquid-glass hover-cyan-glow group text-white text-sm font-body font-medium rounded px-6 py-3 active:scale-[0.97] transition-all duration-200 hover:scale-[0.97]"
           >
             <span className="relative z-10 inline-flex items-center gap-1.5">
               <Star className="w-3.5 h-3.5" strokeWidth={2.25} />
@@ -1391,7 +1391,7 @@ function FAQItem({
         'border-b transition-colors duration-200 ' +
         (isOpen
           ? 'border-[color:var(--flo-cyan-soft)]'
-          : 'border-white/[0.08] hover:border-[color:var(--flo-cyan-soft)]')
+          : 'border-white/[0.08] hover:border-[color:var(--flo-blue-soft)]')
       }
     >
       <button
@@ -1591,7 +1591,7 @@ function Footer() {
                 key={l.label}
                 href={l.href}
                 {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                className="font-body text-[11px] tracking-[0.25em] uppercase text-white/45 hover:text-flo-cyan transition-colors duration-200"
+                className="font-body text-[11px] tracking-[0.25em] uppercase text-white/45 hover:text-flo-blue transition-colors duration-200"
               >
                 {l.label}
               </a>
@@ -1605,7 +1605,7 @@ function Footer() {
               href="https://thecanteenapp.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white/55 hover:text-flo-cyan transition-colors duration-200"
+              className="text-white/55 hover:text-flo-blue transition-colors duration-200"
             >
               Agora Agents
             </a>
@@ -1651,7 +1651,7 @@ function SocialIcon({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className="hover-cyan-edge w-9 h-9 inline-flex items-center justify-center rounded border border-white/[0.08] text-white/55 hover:text-flo-cyan"
+      className="hover-cyan-edge w-9 h-9 inline-flex items-center justify-center rounded border border-white/[0.08] text-white/55 hover:text-flo-blue"
     >
       {icon}
     </a>

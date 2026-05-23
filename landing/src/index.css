@@ -22,6 +22,14 @@
   --flo-cyan-soft:   rgba(123, 224, 255, 0.55);
   --flo-cyan-glow:   rgba(123, 224, 255, 0.32);
   --flo-cyan-faint:  rgba(123, 224, 255, 0.12);
+
+  /* ──────────── Hover deep blue ────────────
+     Used for all interactive hover states — buttons, edges, links.
+     Distinct from the brand cyan so hover feels intentional. */
+  --flo-blue:       #1B4FFF;
+  --flo-blue-soft:  rgba(27, 79, 255, 0.55);
+  --flo-blue-glow:  rgba(27, 79, 255, 0.32);
+  --flo-blue-faint: rgba(27, 79, 255, 0.12);
 }
 
 html, body {
@@ -47,19 +55,21 @@ html, body {
 }
 .hover-cyan-glow:hover {
   box-shadow:
-    0 0 0 1px var(--flo-cyan-soft),
-    0 0 28px 4px var(--flo-cyan-glow);
+    0 0 0 1px var(--flo-blue-soft),
+    0 0 28px 4px var(--flo-blue-glow);
+  transform: scale(0.97);
 }
 
 .hover-cyan-edge {
-  transition: border-color 220ms ease, box-shadow 220ms ease, color 220ms ease;
+  transition: border-color 220ms ease, box-shadow 220ms ease, color 220ms ease, transform 220ms ease;
 }
 .hover-cyan-edge:hover {
-  border-color: var(--flo-cyan-soft) !important;
-  box-shadow: 0 0 18px -2px var(--flo-cyan-glow);
+  border-color: var(--flo-blue-soft) !important;
+  box-shadow: 0 0 18px -2px var(--flo-blue-glow);
+  transform: scale(0.97);
 }
 
-/* Inline link hover — underline + cyan tint, no layout shift */
+/* Inline link hover — underline + blue tint, no layout shift */
 .hover-cyan-link {
   position: relative;
   transition: color 200ms ease;
@@ -71,13 +81,13 @@ html, body {
   right: 0;
   bottom: -2px;
   height: 1px;
-  background: var(--flo-cyan);
+  background: var(--flo-blue);
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform 240ms ease;
 }
 .hover-cyan-link:hover {
-  color: var(--flo-cyan);
+  color: var(--flo-blue);
 }
 .hover-cyan-link:hover::after {
   transform: scaleX(1);
@@ -85,6 +95,9 @@ html, body {
 
 /* Brand cyan text utility (use sparingly — single word emphasis only) */
 .text-flo-cyan { color: var(--flo-cyan); }
+
+/* Deep blue hover text utility */
+.text-flo-blue { color: var(--flo-blue); }
 
 /* ──────────── Liquid glass surfaces ──────────── */
 .liquid-glass {

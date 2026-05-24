@@ -3,3 +3,12 @@ node_modules/
 .env*
 .DS_Store
 float-brain/raw/
+
+# Large local video masters (kept locally, not committed)
+4k flo video.mov
+Float Middleware for Instant Stablecoin Yield.mp4
+
+# Local-only pitch deck assets (kept locally, not committed)
+FLOAT-pitch-deck.pptx
+FLOAT-pitch-deck.pdf
+pitch deck /

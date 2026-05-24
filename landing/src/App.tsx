@@ -746,19 +746,19 @@ function MeetFlo() {
     color: string;
   }> = [
     {
-      file: '/flo-calm.png',
+      file: '/flo-calm.webp',
       label: 'IDLE',
       sub: 'at rest · awaiting signal',
       color: 'text-white/70',
     },
     {
-      file: '/flo-focused.jpeg',
+      file: '/flo-focused.webp',
       label: 'EXECUTING',
       sub: 'wallet busy · submitting tx',
       color: 'text-cyan-200',
     },
     {
-      file: '/flo-happy.jpeg',
+      file: '/flo-happy.webp',
       label: 'PARKED',
       sub: 'idle USDC earning · in USYC',
       color: 'text-emerald-300',
@@ -820,7 +820,7 @@ function FloHead({
   color: string;
 }) {
   const [errored, setErrored] = useState(false);
-  const displaySrc = errored ? '/flo-calm.png' : file;
+  const displaySrc = errored ? '/flo-calm.webp' : file;
 
   return (
     <figure className="relative flex flex-col items-center group">
@@ -906,8 +906,10 @@ function LazySection() {
     >
       {/* ─── Image layer ─── */}
       <img
-        src="/lazy-section.png"
+        src="/lazy-section.webp"
         alt="A person resting among cassettes — idle, but the world keeps spinning."
+        loading="lazy"
+        decoding="async"
         className="absolute inset-0 w-full h-full object-cover"
         style={{ objectPosition: 'center 35%' }}
       />
@@ -1153,9 +1155,11 @@ function StartCTA() {
           `object-bottom` keeps the runner's feet anchored low so the
           composition reads as "moving forward" rather than centered. */}
       <img
-        src="/start-bg.png"
+        src="/start-bg.webp"
         alt=""
         aria-hidden="true"
+        loading="lazy"
+        decoding="async"
         className="absolute inset-0 w-full h-full object-cover object-bottom pointer-events-none select-none"
       />
 
@@ -1486,7 +1490,7 @@ function Footer() {
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
           aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover z-0 select-none pointer-events-none"
         />

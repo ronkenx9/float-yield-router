@@ -19,6 +19,6 @@
     "@circle-fin/developer-controlled-wallets": "^10.3.1",
     "ai": "^6.0.184",
     "dotenv": "^17.4.2",
-    "ethers": "^6.16.0"
+    "ethers": "^6.17.0"
   }
 }

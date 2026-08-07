@@ -12,7 +12,7 @@
     "@ai-sdk/groq": "^3.0.39",
     "@circle-fin/developer-controlled-wallets": "^10.3.1",
     "dotenv": "^17.4.2",
-    "next": "16.2.6",
+    "next": "16.3.0",
     "ogl": "^1.0.11",
     "react": "19.2.4",
     "react-dom": "19.2.4"

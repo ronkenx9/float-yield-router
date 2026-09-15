@@ -16,7 +16,24 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        <script src="https://cdn.tailwindcss.com" async></script>
+        <script dangerouslySetInnerHTML={{ __html: `
+          window.tailwind = window.tailwind || {};
+          tailwind.config = {
+            theme: {
+              extend: {
+                fontFamily: {
+                  heading: ["'Instrument Serif'", 'serif'],
+                  body: ["'Barlow'", 'sans-serif'],
+                },
+                borderRadius: {
+                  DEFAULT: '9999px',
+                }
+              }
+            }
+          }
+        `}} />
       </head>
       <body>
         {children}

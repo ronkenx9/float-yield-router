@@ -1,0 +1,17 @@
+{
+  "name": "@floatrouter/policy",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "FLOAT policy contract: typed risk policy, validator, authority diff, and permission compiler for the Arc liquidity agent. Pure, deterministic, dependency-free.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.ts\"",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "engines": {
+    "node": ">=23"
+  }
+}

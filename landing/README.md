@@ -2,6 +2,14 @@
 
 **The FLOAT marketing site.**
 
+## Current product direction — September 2026
+
+The landing page now previews FLOAT as a personal liquidity agent for Arc. The full product, architecture, pricing, risk and rollout plan is [the liquidity-agent plan](../docs/float-agent/PLAN.md). The agent is not implemented by this copy pass.
+
+Current sections: hero → Your goals/Flo/Arc → six illustrative capabilities → Calm/Balanced/Aggressive → philosophy → You/Flo/Net controls → six FAQs → development CTA → footer. The primary CTA scrolls to the preview; the closing CTA links to the existing project X account. No signup, billing or fund management is connected.
+
+The cinematic assets, layout, typography and animations are preserved. Old APY, recall-latency and USYC claims are removed from the rendered marketing page and metadata. The technical notes below describe the original design implementation; historical product copy examples are not current capabilities.
+
 A Vite + React + TypeScript + Tailwind app, dark editorial aesthetic, italic Instrument Serif + Barlow + Dirtyline. Nine sections, hero with boomerang video, cinematic image still, typographic outro.
 
 ```bash

@@ -1,0 +1,17 @@
+{
+  "name": "@floatrouter/venues",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "FLOAT venue adapters: generic quote/simulate/read interface with Uniswap V3 LP as the first implementation. Pure, deterministic, dependency-free. No keys, no network, no calldata execution.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.ts\"",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "engines": {
+    "node": ">=23"
+  }
+}

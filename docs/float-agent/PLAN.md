@@ -12,6 +12,8 @@ Pivot FLOAT from idle-treasury routing to a retail liquidity-provider product fo
 
 **Not a promise:** fixed returns, principal protection, always-profitable rebalancing, guaranteed exits, or an AI that predicts winning tokens.
 
+**Two-phase vision (recorded 16 September 2026):** Phase 1 is the LP agent above — narrow, approval-first, shippable. Phase 2 generalizes Flo into one Arc bot (swaps, broader DeFi) with LP as the first skill. Phase 2 reuses the same policy contract: more action types and venue adapters, all gated by the existing allowlists, caps, and fail-closed checks. `SWAP` and any new action require a policy extension plus fresh user approval; selecting a risk mode never silently grants autonomy. The safety rails matter more in Phase 2, not less.
+
 This task delivers the plan and marketing copy only. LP contracts, the agent service, billing, account permissions and mainnet execution remain future implementation. Do not rebrand the existing treasury dashboard as a working LP manager.
 
 ## 2. Customer and demand hypothesis
@@ -137,6 +139,8 @@ Arc exposes native USDC and the USDC ERC-20 view of the same funds. Do not add b
 
 Start with a standard concentrated-liquidity venue only after verification. Uniswap v3 is the first adapter candidate [R8], not a promised Arc deployment. Defer arbitrary v4 hooks, fee-on-transfer/rebasing tokens, leverage, incentives harvesting and cross-chain management. A launchpad's locked creator LP fees do not belong to new FLOAT LPs. Verify public position creation and actual fee ownership for every supported pool.
 
+ACTFUN (observed launch UI, September 2026) is a pool SOURCE candidate, not a venue shortcut: bonding-curve trades are not LP positions; creator-locked graduation LP (70/30 creator/platform split) is excluded; only graduated PUBLIC pools (V3 0.30% full-range or V4 native-USDC, USDC-only pair live at observation) may enter eligibility screening, subject to the same 14-day history, bytecode verification, and readiness gates. V3 and V4 remain different implementations. See `packages/venues/src/actfun.ts` for the classification rules. No mainnet addresses are hardcoded from this observation.
+
 ## 7. Accounting and evaluation
 
 At a timestamp, mark LP inventory, uncollected fees and idle cash using stated price sources and freshness. Avoid adding fees twice when already included in balances. Unknown prices produce “valuation unavailable,” never zero or fabricated gains.
@@ -205,6 +209,8 @@ Do not compress this into a day-one mainnet launch because the chain is launchin
 8. Billing/operations: entitlements, audit logs, alerts and runbooks.
 
 These paths are proposed, not existing modules. Prefer a small modular service initially; do not introduce separate deployments solely because the plan lists components.
+
+Implementation status (16 September 2026): `packages/policy` (policy contract, validator, permission compiler), `packages/venues` (generic adapter interface, Uniswap V3 LP implementation, ACTFUN pool-source classification), `packages/accounting` (cash-flow ledger, valuations, hold-benchmark P&L), `services/indexer` (cursors, snapshots, reconciliation, stale flags), `services/agent` (goal parser, deterministic planner, explanations), `services/executor` (durable jobs, policy-gated submit, receipts, recovery), and `services/e2e` (offline goal→receipt→ledger→explanation proof with a fake submitter) exist as offline, deterministic, dependency-free modules with behavioral tests (103 tests green across 7 suites). They prove quoting, screening, planning, permission shapes, and wiring — not production LP readiness, mainnet deployment, or audited authority.
 
 ## 11. Existing repository migration
 

@@ -1,0 +1,17 @@
+{
+  "name": "@floatrouter/executor",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "FLOAT executor: durable jobs, account serialization, policy-gated submit, receipts, recovery. No keys, no RPC here — submission is injected and faked in tests.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.ts\"",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "engines": {
+    "node": ">=23"
+  }
+}

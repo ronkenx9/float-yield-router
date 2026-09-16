@@ -1,0 +1,17 @@
+{
+  "name": "@floatrouter/indexer",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "FLOAT market indexer: block cursors, pool snapshots, event dedupe/reconciliation, stale flags. Deterministic, offline, dependency-free. No RPC in this pass.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.ts\"",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "engines": {
+    "node": ">=23"
+  }
+}

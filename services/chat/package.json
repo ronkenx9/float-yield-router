@@ -1,0 +1,17 @@
+{
+  "name": "@floatrouter/chat",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "FLOAT chat shell: Photon (Spectrum) transport + OpenAI brain + skill router over the existing policy-gated services. iMessage-first, offline-testable with fakes. No secrets in repo.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.ts\"",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "engines": {
+    "node": ">=23"
+  }
+}

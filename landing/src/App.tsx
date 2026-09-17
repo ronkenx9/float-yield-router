@@ -17,11 +17,11 @@ import {
 /* Real anchored nav — each entry points at a section that exists on this page,
    or an external URL for SDK / Docs. */
 const NAV_LINKS: Array<{ label: string; href: string; external?: boolean }> = [
-  { label: 'Capabilities', href: '#capabilities' },
-  { label: 'Flo',          href: '#meet-flo' },
-  { label: 'Numbers',      href: '#numbers' },
+  { label: 'How it works', href: '#capabilities' },
+  { label: 'Risk modes',   href: '#meet-flo' },
+  { label: 'Controls',     href: '#numbers' },
   { label: 'Questions',    href: '#questions' },
-  { label: 'Docs',         href: 'https://github.com/ronkenx9/float-yield-router#readme', external: true },
+  { label: 'Preview',      href: '#capabilities' },
 ];
 
 const GITHUB_URL  = 'https://github.com/ronkenx9/float-yield-router';
@@ -335,6 +335,20 @@ function Hero() {
         style={{ top: '126px' }}
       >
         <h1 className="hero-title select-none">float</h1>
+        <div className="mx-auto mt-2 sm:mt-4 max-w-[700px] text-center px-3">
+          <p className="mb-3 text-[10px] sm:text-[11px] tracking-[0.32em] uppercase text-white/70 font-body" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.9)' }}>
+            Personal liquidity agent · Built for Arc
+          </p>
+          <p className="font-heading italic text-white leading-[0.98] text-[30px] sm:text-[42px] md:text-[54px]" style={{ textShadow: '0 2px 18px rgba(0,0,0,0.85)' }}>
+            Earn trading fees. Skip the LP work.
+          </p>
+          <p className="mt-3 text-[13px] sm:text-base text-white/85 font-body font-light leading-relaxed" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.9)' }}>
+            Choose your risk. Flo handles pool selection, price ranges, rebalancing and fee collection on Arc.
+          </p>
+          <p className="mt-2 text-[9px] sm:text-[10px] tracking-[0.24em] uppercase text-white/55 font-body">
+            Product preview · In development · Capital at risk
+          </p>
+        </div>
       </div>
 
       {/* Bottom row
@@ -350,37 +364,34 @@ function Hero() {
         }
       >
         <p className="hidden md:block text-sm font-body font-light text-white/75 max-w-[240px] leading-relaxed">
-          While your agents wait, your USDC earns.
-          Yield middleware for the post-CLI world.
+          Put your USDC into liquidity pools.
+          Earn a share of the trading fees.
         </p>
 
         <div className="w-full md:w-auto md:absolute md:left-1/2 md:-translate-x-1/2 md:bottom-0 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
           <a
-            href={GITHUB_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#capabilities"
             className="hover-cyan-glow group relative bg-white text-black hover:text-white text-sm font-body font-medium rounded px-6 py-3 overflow-hidden active:scale-[0.97] transition-all duration-200 hover:scale-[0.97] text-center"
           >
             <span className="relative z-10 inline-flex items-center justify-center gap-1.5">
-              Get the SDK
+              See how it works
               <ArrowUpRight className="w-4 h-4" strokeWidth={2.25} />
             </span>
             <span className="absolute inset-0 bg-[color:var(--flo-blue)] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
           </a>
 
           <a
-            href="#demo"
+            href="#meet-flo"
             className="liquid-glass hover-cyan-glow group relative overflow-hidden text-white text-sm font-body font-medium rounded px-6 py-3 active:scale-[0.97] transition-all duration-200 hover:scale-[0.97] text-center"
           >
-            <span className="relative z-10">Watch it work</span>
+            <span className="relative z-10">Choose your risk</span>
             <span className="absolute inset-0 bg-[color:var(--flo-blue)] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
           </a>
         </div>
 
         <p className="hidden md:block text-sm font-body font-light text-white/75 max-w-[240px] leading-relaxed text-right">
-          Park into USYC in one call.{' '}
-          <em className="not-italic text-flo-cyan" style={{ fontStyle: 'italic', fontFamily: 'Instrument Serif, serif' }}>Recall</em>{' '}
-          in seconds, settled on Arc.
+          No range charts. No constant rebalancing.
+          Flo does the LP management for you.
         </p>
       </div>
 
@@ -433,7 +444,7 @@ function FixedNav() {
             href="#start"
             className="liquid-glass-strong hover-cyan-glow group relative overflow-hidden text-[11px] sm:text-xs font-body font-medium text-white rounded px-2.5 sm:px-3 py-1 sm:py-1.5 transition-all duration-200 hover:scale-[0.97] active:scale-[0.97]"
           >
-            <span className="relative z-10">Get started</span>
+            <span className="relative z-10">Explore FLOAT</span>
             <span className="absolute inset-0 bg-[color:var(--flo-blue)] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
           </a>
         </div>
@@ -453,9 +464,9 @@ function FixedNav() {
 
 function BuiltWith() {
   const stack: Array<{ name: string; role: string }> = [
-    { name: 'Photon', role: 'queue · cancellation · recovery' },
-    { name: 'Arc',    role: 'sub-sec finality · ~$0.01 settles' },
-    { name: 'Circle', role: 'agent wallets · USDC · USYC' },
+    { name: 'Add USDC',    role: 'choose how much to put to work' },
+    { name: 'Pick a mode', role: 'calm · balanced · aggressive' },
+    { name: 'Flo manages', role: 'ranges · rebalancing · fees' },
   ];
 
   return (
@@ -474,7 +485,7 @@ function BuiltWith() {
           <span className="font-body text-[10px] tracking-[0.35em] uppercase">01</span>
           <span className="h-px w-12 bg-white/20" />
           <span className="font-body text-[10px] tracking-[0.35em] uppercase">
-            built with
+            the idea
           </span>
         </div>
       </div>
@@ -483,12 +494,12 @@ function BuiltWith() {
           Subtle hover lift signals it's interactive without breaking the editorial tone. */}
       <div className="absolute top-8 sm:top-12 right-6 sm:right-10 z-10 text-right">
         <a
-          href="https://thecanteenapp.com"
+          href="#capabilities"
           target="_blank"
           rel="noopener noreferrer"
           className="group inline-flex items-baseline gap-1.5 font-body text-[10px] tracking-[0.35em] uppercase text-white/30 hover:text-flo-blue transition-colors duration-200"
         >
-          <span>Agora Agents · 2026</span>
+          <span>Product preview · 2026</span>
           <ArrowUpRight
             className="w-2.5 h-2.5 -translate-y-px opacity-60 group-hover:opacity-100 transition-opacity duration-200"
             strokeWidth={2.25}
@@ -552,10 +563,10 @@ function Features() {
           <span className="font-body text-[10px] tracking-[0.35em] uppercase">02</span>
           <span className="h-px w-12 bg-white/20" />
           <span className="font-body text-[10px] tracking-[0.35em] uppercase">
-            capabilities
+            how it works
           </span>
           <span className="ml-auto font-body text-[10px] tracking-[0.3em] uppercase text-white/30">
-            every visual below · real orchestrator output
+            illustrative examples · not live activity
           </span>
         </div>
 
@@ -564,14 +575,14 @@ function Features() {
             className="lg:col-span-7 font-heading italic text-white"
             style={{ fontSize: 'clamp(48px, 6vw, 96px)', lineHeight: 0.95, letterSpacing: '-0.015em' }}
           >
-            What FLOAT
+            LP fees.
             <br />
-            actually does.
+            Managed for you.
           </h2>
           <p className="lg:col-span-5 lg:pt-6 max-w-md text-white/65 text-base font-body font-light leading-relaxed">
-            Six things, each provable. The traces below are sampled from a live
-            orchestrator running three Circle Agent Wallets on Arc Testnet,
-            making real park/withdraw decisions against USYC.
+            You do not need to learn liquidity ranges or watch pools all day.
+            Choose a risk level and Flo handles the position on Arc. You see every move,
+            every fee and your real result after costs. Product preview—not live yet.
           </p>
         </div>
 
@@ -579,98 +590,65 @@ function Features() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.06]">
           <FeatureCard
             index="01"
-            title="Yield-as-default"
-            body="Idle USDC parks into USYC the moment your agent stops trading. Live APY, no manual sweeps."
-            trace={
-              <pre className="leading-relaxed">
-{`> flo.status('trader-b')
+            title="Choose how you want to earn"
+            body="Pick Calm, Balanced or Aggressive. Flo turns that choice into clear limits for your USDC."
+            trace={<pre className="leading-relaxed">{`EXAMPLE POLICY
 
-  state ─── PARKED
-  vault ─── USYC
-  parked ── $18.50
-  apy ───── 5.15%
-  yield ─── `}<span className="text-emerald-300">+$0.0000017/s</span>
-              </pre>
-            }
+  mode ─────── Balanced
+  reserve ──── 30% USDC
+  pool cap ─── 10%
+  new pools ── ask me first`}</pre>}
           />
           <FeatureCard
             index="02"
-            title="Sub-5s recall"
-            body="Direct Arc RPC and eth_getTransactionReceipt polling. Park → liquid, end-to-end, in under five seconds."
-            trace={
-              <pre className="leading-relaxed">
-{`{
-  "txHash": "0x453f…3750b",
-  "status": "COMPLETE",
-  "block": 8421073,
-  `}<span className="text-emerald-300">"recallLatencyMs": 4847</span>{`
-}`}
-              </pre>
-            }
+            title="Flo finds the pools"
+            body="Flo checks trading activity, available liquidity and token risk before suggesting where your USDC could earn fees."
+            trace={<pre className="leading-relaxed">{`EXAMPLE POOL REVIEW
+
+  volume ───── check history
+  liquidity ── check depth
+  token risk ─ screen first
+  decision ─── review costs`}</pre>}
           />
           <FeatureCard
             index="03"
-            title="Adaptive policy"
-            body="PolicyEngine scores park/withdraw on agent state, market volatility, and idle time. Three presets, infinite tuning."
-            trace={
-              <pre className="leading-relaxed">
-{`strategy.aggressive
+            title="Flo manages the position"
+            body="It sets the price range, watches the pool and prepares a rebalance when moving the position is worth the cost."
+            trace={<pre className="leading-relaxed">{`EXAMPLE DECISION
 
-  parkThreshold ────── 0.40
-  withdrawThreshold ── 0.20
-  minIdleTimeSeconds ─ 45
-  maxActionsPerHour ── 7  `}<span className="text-cyan-300">← v2</span>
-              </pre>
-            }
+  range ────── still active
+  swap cost ── too high
+  action ───── HOLD
+
+  No change proposed.`}</pre>}
           />
           <FeatureCard
             index="04"
-            title="RLAIF Critic"
-            body="Independent reviewer audits decisions every N rounds and proposes parameter tweaks. Suggests in JSON; humans approve."
-            trace={
-              <pre className="leading-relaxed">
-{`{
-  "finding": "Over-reactive recall.",
-  "parameter": "cooldownAfter
-   WithdrawSeconds",
-  "old": 120,
-  "new": `}<span className="text-cyan-300">720</span>{`,
-  "confidence": "high"
-}`}
-              </pre>
-            }
+            title="See what you actually earned"
+            body="Trading fees are only half the story. FLOAT shows fees, token-value changes and transaction costs as one net result."
+            trace={<pre className="leading-relaxed">{`ILLUSTRATIVE P&L
+
+  trading fees ─── +$12
+  inventory move ─ -$18
+  execution ──────  -$2
+  net result ─────  -$8`}</pre>}
           />
           <FeatureCard
             index="05"
-            title="Second Brain"
-            body="Hourly LLM compile turns raw event logs into per-agent narratives. The Critic reads its own history — no repeated mistakes."
-            trace={
-              <pre className="leading-relaxed font-body italic text-white/85 text-[13px]">
-                On May 19 at 17:28 UTC, agent "trader-a" executed a decision to
-                park $16.65 USDC into FloatVault with score 0.74. The action
-                was part of the agent's autonomous decision-making — all
-                transactions confirmed.
-                <span className="block mt-3 not-italic font-mono text-[10px] tracking-wider text-white/35">
-                  —— compiled by llama-3.3-70b
-                </span>
-              </pre>
-            }
+            title="Collect without the busywork"
+            body="Flo tracks when fees are worth collecting and explains what it wants to do in plain language."
+            trace={<pre className="leading-relaxed font-body italic text-white/85 text-[13px] whitespace-pre-wrap">Example update: “Your position is out of range. I have prepared a new range for review. No transaction has been submitted.”</pre>}
           />
           <FeatureCard
             index="06"
-            title="Human-in-the-loop"
-            body="Approve recommendations via a markdown checkbox. The file-watcher applies live in &lt;2s. Audit trail with timestamps."
-            trace={
-              <pre className="leading-relaxed">
-{`## v3 — trader-c
+            title="Your money stays under your rules"
+            body="The first release asks before every move. Later autopilot will use limited permissions you can pause or revoke."
+            trace={<pre className="leading-relaxed">{`PLANNED APPROVAL FLOW
 
-  `}<span className="text-emerald-300">- [x] Approved</span>{`
-        → cooldownAfter
-          WithdrawSeconds: 720
-  > Applied at:
-    17:44:00 UTC`}
-              </pre>
-            }
+  proposal ─── ready
+  policy ───── checked
+  approval ─── required
+  transaction ─ not submitted`}</pre>}
           />
         </div>
       </div>
@@ -747,21 +725,21 @@ function MeetFlo() {
   }> = [
     {
       file: '/flo-calm.webp',
-      label: 'IDLE',
-      sub: 'at rest · awaiting signal',
+      label: 'CALM',
+      sub: 'wider ranges · tighter limits',
       color: 'text-white/70',
     },
     {
-      file: '/flo-focused.webp',
-      label: 'EXECUTING',
-      sub: 'wallet busy · submitting tx',
-      color: 'text-cyan-200',
+      file: '/flo-happy.webp',
+      label: 'BALANCED',
+      sub: 'measured exposure · room to adapt',
+      color: 'text-emerald-300',
     },
     {
-      file: '/flo-happy.webp',
-      label: 'PARKED',
-      sub: 'idle USDC earning · in USYC',
-      color: 'text-emerald-300',
+      file: '/flo-focused.webp',
+      label: 'AGGRESSIVE',
+      sub: 'more volatility · more oversight',
+      color: 'text-cyan-200',
     },
   ];
 
@@ -786,13 +764,13 @@ function MeetFlo() {
             className="lg:col-span-7 font-heading italic text-white"
             style={{ fontSize: 'clamp(48px, 6vw, 96px)', lineHeight: 0.95, letterSpacing: '-0.015em' }}
           >
-            Three faces.
+            Pick your risk.
             <br />
-            One agent.
+            Flo handles the rest.
           </h2>
           <p className="lg:col-span-5 lg:pt-6 max-w-md text-white/65 text-base font-body font-light leading-relaxed">
-            Flo expresses what your agent is doing in real time.
-            When it sleeps, your USDC isn't.
+            No LP setup knowledge required. Start with a simple mode, then adjust
+            the limits if you want more control. Every mode can lose money.
           </p>
         </div>
 
@@ -858,17 +836,17 @@ function FloHead({
         {/* State indicator dot */}
         <div className="absolute top-4 left-4 flex items-center gap-2 z-10">
           <span className={`relative inline-flex h-1.5 w-1.5 rounded ${
-            label === 'IDLE' ? 'bg-white/50' :
-            label === 'EXECUTING' ? 'bg-cyan-400' : 'bg-emerald-400'
+            label === 'CALM' ? 'bg-white/50' :
+            label === 'AGGRESSIVE' ? 'bg-cyan-400' : 'bg-emerald-400'
           }`}>
-            {label !== 'IDLE' && (
+            {label !== 'CALM' && (
               <span className={`absolute inline-flex h-full w-full rounded animate-ping ${
-                label === 'EXECUTING' ? 'bg-cyan-400/60' : 'bg-emerald-400/60'
+                label === 'AGGRESSIVE' ? 'bg-cyan-400/60' : 'bg-emerald-400/60'
               }`} />
             )}
           </span>
           <span className="font-body text-[9px] tracking-[0.3em] uppercase text-white/80">
-            {label === 'IDLE' ? 'idle' : label === 'EXECUTING' ? 'executing' : 'parked'}
+            {label === 'CALM' ? 'calm' : label === 'AGGRESSIVE' ? 'aggressive' : 'balanced'}
           </span>
         </div>
       </div>
@@ -879,7 +857,7 @@ function FloHead({
           className={`font-heading italic text-3xl ${color}`}
           style={{ letterSpacing: '-0.01em' }}
         >
-          {label === 'IDLE' ? 'idle' : label === 'EXECUTING' ? 'executing' : 'parked'}
+          {label === 'CALM' ? 'calm' : label === 'AGGRESSIVE' ? 'aggressive' : 'balanced'}
         </h3>
         <p className="mt-1 font-body text-[11px] tracking-[0.25em] uppercase text-white/45">
           {sub}
@@ -971,17 +949,15 @@ function LazySection() {
           <span className="font-body text-[10px] tracking-[0.35em] uppercase">04</span>
           <span className="h-px w-12 bg-white/30" />
           <span className="font-body text-[10px] tracking-[0.35em] uppercase">
-            idle is the point
+            managed for you
           </span>
         </div>
         <p
           className="mt-6 text-white/80 text-[14px] sm:text-[15px] font-body font-light leading-[1.55]"
           style={{ textShadow: '0 1px 8px rgba(0,0,0,0.7)' }}
         >
-          Yield middleware for agents on Arc.
-          Idle USDC parks into{' '}
-          <span className="text-white">USYC</span>.
-          Recall in under five seconds.
+          Liquidity pools need watching: prices move, ranges expire and fees need collecting.
+          Flo is being built to handle that work for you.
         </p>
       </div>
 
@@ -992,12 +968,12 @@ function LazySection() {
           className="font-heading italic text-white/70 text-[15px] leading-snug"
           style={{ textShadow: '0 1px 8px rgba(0,0,0,0.7)' }}
         >
-          "All things that are exchanged
+          “Doing nothing can be
           <br />
-          must be somehow comparable."
+          a considered decision.”
         </p>
         <p className="mt-2 font-body text-[10px] tracking-[0.3em] uppercase text-white/45">
-          Aristotle · Nicomachean Ethics V
+          The FLOAT philosophy
         </p>
       </div>
 
@@ -1016,7 +992,7 @@ function LazySection() {
           <span className="relative inline-flex rounded h-2 w-2 bg-emerald-400" />
         </span>
         <span className="text-white/95 tracking-wide">
-          trader-b · <span className="text-emerald-300">PARKED</span> · $18.50
+          Example · <span className="text-emerald-300">HOLD</span> · within limits
         </span>
       </div>
 
@@ -1031,7 +1007,7 @@ function LazySection() {
       >
         <Pause className="w-3 h-3 text-white/65" strokeWidth={2} />
         <span className="text-white/90 tracking-wider">
-          + <span className="font-mono">$0.000017</span> yield/sec
+          Example · no rebalance needed
         </span>
       </div>
 
@@ -1050,9 +1026,9 @@ function LazySection() {
           color: '#fff',
         }}
       >
-        While you rest,
+        Earn the fees.
         <br />
-        <span className="text-white">your capital works.</span>
+        <span className="text-white">Let Flo run the LP.</span>
       </h2>
     </section>
   );
@@ -1074,24 +1050,24 @@ function NumbersStrip() {
           <span className="font-body text-[10px] tracking-[0.35em] uppercase">05</span>
           <span className="h-px w-12 bg-white/20" />
           <span className="font-body text-[10px] tracking-[0.35em] uppercase">
-            the numbers
+            three simple steps
           </span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/[0.06]">
-          <StatBig big="5.15%" label="USYC target APY" sub="Circle's tokenized money market fund" />
-          <StatBig big="<5s"   label="end-to-end recall" sub="park → liquid, settled on Arc" />
-          <StatBig big="$0.01" label="per Arc settlement" sub="paid in USDC, no volatile gas" />
+          <StatBig big="01" label="add USDC" sub="Choose the amount you want to put to work" />
+          <StatBig big="02" label="pick your risk" sub="Calm, Balanced or Aggressive" />
+          <StatBig big="03" label="Flo manages" sub="Pools, ranges, rebalancing and fees" />
         </div>
       </div>
 
       {/* Footer — stacks on mobile, opposite-end on desktop */}
       <div className="mt-20 sm:mt-32 max-w-6xl mx-auto flex flex-col sm:flex-row gap-3 sm:gap-4 sm:items-end sm:justify-between">
         <p className="text-[10px] tracking-[0.3em] uppercase text-white/40">
-          FLOAT · Yield middleware for Arc agents · Built for Agora Agents Hackathon
+          FLOAT · EARN TRADING FEES WITHOUT MANAGING THE LP · BUILT FOR ARC · PRODUCT PREVIEW
         </p>
         <p className="text-[10px] tracking-[0.3em] uppercase text-white/40 sm:text-right">
-          Circle · USYC · Arc · 2026
+          Add USDC · Choose your risk · Let Flo work
         </p>
       </div>
     </section>
@@ -1129,7 +1105,7 @@ function StatBig({ big, label, sub }: { big: string; label: string; sub: string 
 
 function StartCTA() {
   const [copied, setCopied] = useState(false);
-  const installCmd = 'npm install @floatrouter/sdk';
+  const installCmd = 'Keep 30% in USDC. Ask before swaps.';
 
   const copy = async () => {
     try {
@@ -1235,17 +1211,17 @@ function StartCTA() {
             textShadow: '0 2px 24px rgba(0,0,0,0.65), 0 1px 3px rgba(0,0,0,0.45)',
           }}
         >
-          Ready to make idle
+          Want LP fees
           <br />
-          USDC work?
+          without the LP headache?
         </h2>
 
         <p
           className="mt-8 max-w-xl mx-auto text-white/80 text-lg font-body font-light leading-relaxed"
           style={{ textShadow: '0 1px 12px rgba(0,0,0,0.6)' }}
         >
-          Install in one command. Wrap any Circle Agent Wallet.
-          Park into USYC, recall in under five seconds.
+          Choose how much USDC to put to work and how much risk you want.
+          Flo handles the pool, range and rebalancing. Follow the build for early access.
         </p>
 
         {/* Install command pill
@@ -1254,10 +1230,10 @@ function StartCTA() {
         <button
           onClick={copy}
           className="liquid-glass hover-cyan-glow group mt-12 inline-flex items-center gap-2 sm:gap-3 rounded px-3 sm:px-5 py-3 sm:py-4 font-mono text-[12px] sm:text-[14px] text-left active:scale-[0.985] transition-all duration-150 max-w-full"
-          aria-label="Copy install command"
+          aria-label="Copy example goal"
         >
-          <span className="text-white/35 select-none">$</span>
-          <span className="text-white/95 truncate">{installCmd}</span>
+          <span className="text-white/35 select-none">Goal</span>
+          <span className="text-white/95 whitespace-normal">{installCmd}</span>
           <span className="ml-1 sm:ml-3 inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-white/45 group-hover:text-white/85 transition-colors duration-150 shrink-0">
             {copied ? (
               <>
@@ -1276,13 +1252,13 @@ function StartCTA() {
         {/* CTAs */}
         <div className="mt-10 flex items-center justify-center gap-3 flex-wrap">
           <a
-            href={GITHUB_URL}
+            href={TWITTER_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="hover-cyan-glow group relative bg-white text-black hover:text-white text-sm font-body font-medium rounded px-6 py-3 overflow-hidden active:scale-[0.97] transition-all duration-200 hover:scale-[0.97]"
           >
             <span className="relative z-10 inline-flex items-center gap-1.5">
-              Get the SDK
+              Follow development
               <ArrowUpRight className="w-4 h-4" strokeWidth={2.25} />
             </span>
             <span className="absolute inset-0 bg-[color:var(--flo-blue)] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
@@ -1304,7 +1280,7 @@ function StartCTA() {
 
         {/* Tiny support line */}
         <p className="mt-8 font-body text-[11px] tracking-[0.25em] uppercase text-white/35">
-          Arc Testnet · Circle Agent Wallets · USYC
+          In development · No live fund management · Capital at risk
         </p>
       </div>
     </section>
@@ -1321,24 +1297,32 @@ function StartCTA() {
 
 const FAQS: Array<{ q: string; a: string }> = [
   {
-    q: 'Will my agent miss trades while funds are parked?',
-    a: 'No. FLOAT polls the chain directly via Arc RPC and uses a per-wallet execution mutex with pre-flight vault reads, so recalls land in under five seconds end-to-end. If the agent signals EXECUTING mid-park, the orchestrator defers and the PolicyEngine adapts its idle/cooldown thresholds.',
+    q: 'What exactly would I earn?',
+    a: 'A share of the trading fees generated by the liquidity pools your USDC enters. Those fees are not guaranteed profit: token-price moves and transaction costs can be larger than the fees. FLOAT is designed to show the real net result, not just a large fee-rate number.',
   },
   {
-    q: 'Does FLOAT need custody of my private keys?',
-    a: 'Never. FLOAT runs through Circle Agent Wallets — Circle holds the keys, your agent owns the wallet, and the FLOAT SDK only submits signed transactions through Circle\'s standard interface. We don\'t see or store key material at any point.',
+    q: 'Do I need to understand liquidity pools?',
+    a: 'Not to use the planned product. You choose an amount and a risk mode; Flo handles pool screening, price ranges, rebalancing and fee collection. You can inspect every rule and proposal, but you should not need to become an LP expert first.',
   },
   {
-    q: 'What\'s actually in the vault?',
-    a: 'USYC — Circle\'s tokenized money market fund, holding short-duration US Treasury bills. Audited, regulated, and currently yielding around 5.15% APY. Park and withdraw happen via a thin FloatVault contract that wraps the USYC deposit, with the full audit trail pinned to the FLOAT Second Brain.',
+    q: 'Why Arc?',
+    a: 'FLOAT is built for Arc: USDC-native, EVM-compatible and aimed at the liquidity forming around Arc pools. Flo screens those pools, sets ranges and manages positions there. Arc mainnet integration is a verification gate—verified network, contracts and accounting are required before any live funds, so today this is a preview built for Arc, not a live mainnet product.',
   },
   {
-    q: 'How do I integrate with my existing agent?',
-    a: 'One line. Wrap your agent client with wrapAgent(myAgent, { strategy: \'balanced\', vault: \'USYC\' }) and FLOAT routes idle USDC automatically, signals park/withdraw based on agent state, and exposes the live ledger. Ten-minute integration; no new contracts to learn.',
+    q: 'Can Flo move money without asking?',
+    a: 'The first release is planned around your approval for each action. Later automation will require explicit, limited permissions that you can revoke. The AI will not be allowed to change its own limits. Wallet architecture and security review must be completed before live funds are supported.',
   },
   {
-    q: 'Which chains and wallets are supported?',
-    a: 'Arc Testnet today, with Circle Agent Wallets as the auth layer. Mainnet Arc and other Circle-supported chains land alongside Circle Gateway integration for cross-chain recall (~500ms cross-chain via Gateway, sub-5s on-chain settle on the destination).',
+    q: 'Can I lose money providing liquidity?',
+    a: 'Yes. Token-price moves, divergence loss, depegs, smart-contract failures and execution costs can outweigh trading fees. An exit trigger cannot guarantee a price or available liquidity. FLOAT will show losses as well as fees; it will not promise a fixed APY or protected principal.',
+  },
+  {
+    q: 'What will FLOAT cost?',
+    a: 'We plan to keep discovery and basic tracking free, with a subscription for ongoing agent management. Pricing is not final and no subscription is being sold here. Network and swap costs will be disclosed separately. We do not plan to charge per rebalance.',
+  },
+  {
+    q: 'Can I use it on mainnet today?',
+    a: 'No. The liquidity agent is in development. The existing repository contains the earlier treasury-router prototype, not a production LP manager. Verified integrations, accurate accounting, user controls and a security review are release requirements—not features you should assume are already live.',
   },
 ];
 
@@ -1361,7 +1345,7 @@ function FAQSection() {
           Doubts.
         </h2>
         <p className="text-white/55 text-base font-body font-light mb-16 max-w-xl">
-          Five honest answers. If yours isn't here, the SDK README has the long version.
+          What’s planned, what’s not live, and what you should know before using an agent.
         </p>
 
         <div className="space-y-2">
@@ -1467,9 +1451,9 @@ function Footer() {
   const navLinks: Array<{ label: string; href: string; external?: boolean }> = [
     { label: 'Capabilities', href: '#capabilities' },
     { label: 'Meet Flo',     href: '#meet-flo'     },
-    { label: 'Vault',        href: '#vault'        },
-    { label: 'Numbers',      href: '#numbers'      },
-    { label: 'SDK',          href: '#start'        },
+    { label: 'Philosophy',        href: '#vault'        },
+    { label: 'Controls',     href: '#numbers'      },
+    { label: 'Updates',          href: '#start'        },
     { label: 'Questions',    href: '#questions'    },
   ];
 
@@ -1535,7 +1519,7 @@ function Footer() {
         {/* Opposite-corner micro-attribution (matches earlier sections' diagonal) */}
         <div className="absolute top-8 sm:top-12 right-6 sm:right-10 z-10 text-right">
           <p className="font-body text-[10px] tracking-[0.35em] uppercase text-white/30">
-            yield middleware · 2026
+            liquidity agent for Arc · preview
           </p>
         </div>
 
@@ -1565,16 +1549,16 @@ function Footer() {
             className="mt-8 font-heading italic text-white/65 leading-snug"
             style={{ fontSize: 'clamp(18px, 1.8vw, 26px)', letterSpacing: '-0.005em' }}
           >
-            The capital efficiency layer.
+            Earn LP fees on Arc. Let Flo manage the work.
           </p>
 
           {/* Three whispered claims — uses the same em-dash framing as elsewhere */}
           <div className="mt-10 flex items-center gap-3 flex-wrap justify-center font-body text-[10px] tracking-[0.35em] uppercase text-white/35">
-            <span>calm infrastructure</span>
+            <span>add USDC</span>
             <span className="w-1 h-1 rounded bg-white/20" />
-            <span>intelligent liquidity</span>
+            <span>choose your risk</span>
             <span className="w-1 h-1 rounded bg-white/20" />
-            <span>always working</span>
+            <span>Flo manages</span>
           </div>
         </div>
 
@@ -1607,14 +1591,14 @@ function Footer() {
 
           {/* Center — copyright */}
           <p className="font-body text-[10px] tracking-[0.3em] uppercase text-white/35 order-3 lg:order-2 w-full lg:w-auto text-center">
-            © 2026 FLOAT · Built for{' '}
+            © 2026 FLOAT · {' '}
             <a
-              href="https://thecanteenapp.com"
+              href="#capabilities"
               target="_blank"
               rel="noopener noreferrer"
               className="text-white/55 hover:text-flo-blue transition-colors duration-200"
             >
-              Agora Agents
+              Product preview
             </a>
           </p>
 

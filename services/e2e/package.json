@@ -1,0 +1,14 @@
+{
+  "name": "@floatrouter/e2e",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "FLOAT end-to-end (offline): goal → policy → screen → quote → plan → policy-check → execute → receipt → ledger → explain. Fake submitter, no network, no mainnet.",
+  "scripts": {
+    "test": "node --test \"test/*.test.ts\"",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "engines": {
+    "node": ">=23"
+  }
+}

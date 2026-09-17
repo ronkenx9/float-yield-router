@@ -1,0 +1,17 @@
+{
+  "name": "@floatrouter/accounting",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "FLOAT accounting: cash-flow ledger, valuations, hold-benchmark P&L. Pure, deterministic, dependency-free. No LLM math on canonical balances.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.ts\"",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "engines": {
+    "node": ">=23"
+  }
+}

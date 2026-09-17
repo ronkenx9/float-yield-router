@@ -1,0 +1,17 @@
+{
+  "name": "@floatrouter/agent",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "FLOAT agent: typed goal parsing, deterministic planner, evidence-backed explanations. No signing keys, no calldata, no self-authorized policy changes.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.ts\"",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "engines": {
+    "node": ">=23"
+  }
+}

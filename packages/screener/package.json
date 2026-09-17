@@ -1,0 +1,17 @@
+{
+  "name": "@floatrouter/screener",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "FLOAT memecoin screener: filter + rank Arc tokens by observed parameters. Pure, deterministic, dependency-free. A screen, not a pick — never a recommendation.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.ts\"",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "engines": {
+    "node": ">=23"
+  }
+}

@@ -17,7 +17,9 @@ export const HELP_TEXT = [
   'PAUSE — stop future proposals (does not unwind positions)',
   'APPROVE <id> / REJECT <id> — decide on a numbered proposal',
   '',
-  'Coming next: swap, memecoin screener, and launch from chat.',
+  'SCREEN <filters> — find memecoins by parameters (e.g. SCREEN liq over $50k vol over $5k 200+ holders older than 7 days)',
+  '',
+  'Coming next: swap and launch from chat.',
   'I never move money without an APPROVE. Capital at risk.',
 ].join('\n');
 

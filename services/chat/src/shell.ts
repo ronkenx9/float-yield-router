@@ -14,6 +14,7 @@ import type {
   InboundMessage,
   OutboundReply,
   PendingApproval,
+  Approver,
   ShellConfig,
   Skill,
   SkillContext,
@@ -22,10 +23,7 @@ import type {
 import { chunkText } from './types.ts';
 import { fallbackReply } from './skills.ts';
 
-export interface Approver {
-  /** Execute the approved proposal; returns the user-facing receipt line. */
-  execute(spaceId: string, approval: PendingApproval): Promise<string>;
-}
+export type { Approver };
 
 interface Session {
   spaceId: string;

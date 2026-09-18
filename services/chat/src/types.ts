@@ -43,6 +43,8 @@ export interface PendingApproval {
   /** Human-readable summary shown in chat (amounts, pool, costs, expiry). */
   summary: string;
   createdAtSeconds: number;
+  /** Opaque machine payload for the approver (e.g. a cached swap quote). */
+  data?: unknown;
 }
 
 export interface Skill {
@@ -71,6 +73,11 @@ export interface Brain {
 /** Outbound transport: deliver chunks into a space. */
 export interface Transport {
   send(spaceId: string, chunks: string[]): Promise<void>;
+}
+
+/** Post-approval executor: runs the approved proposal, returns a receipt line. */
+export interface Approver {
+  execute(spaceId: string, approval: PendingApproval): Promise<string>;
 }
 
 export interface ShellConfig {

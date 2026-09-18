@@ -13,4 +13,5 @@ export * from './math.ts';
 export * from './eligibility.ts';
 export * from './adapter.ts';
 export * from './uniswapV3.ts';
+export * from './swapRouter.ts';
 export * from './actfun.ts';

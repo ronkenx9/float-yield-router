@@ -7,9 +7,10 @@ typed policy, validator, authority-change detection, and the permission
 compiler + fail-closed action check. Pure, deterministic, dependency-free.
 Run all checks from the repository root.
 
-- [x] G1: The full behavioral test suite passes (units, validation, authority diff, compile + checkAction incl. adversarial rejections).
+- [x] G1: The full behavioral test suite passes (units, validation, authority diff, compile + checkAction incl. adversarial rejections, SWAP gate).
   CHECK: cd packages/policy && node --test --test-reporter=tap "test/*.test.ts" 2>&1 | awk '/^# fail/{f=$3} /^# pass/{p=$3} END{if(p>0 && f==0) print "POLICY_TESTS_PASS"; else print "POLICY_TESTS_FAIL"}'
   EXPECT: POLICY_TESTS_PASS
+  EVIDENCE: manual; 35 pass / 0 fail, 17 September 2026.
 
 - [x] G2: The source typechecks under strict TypeScript with no errors.
   CHECK: cd packages/policy && ../../sdk/node_modules/.bin/tsc -p tsconfig.json >/dev/null 2>&1 && echo POLICY_TYPECHECK_CLEAN
@@ -24,3 +25,4 @@ Run all checks from the repository root.
 - `checkAction` fails closed: pause, stale quote/data, unknown token/pool/contract/selector, disabled capability, or any exceeded numeric cap all reject.
 - Arc mainnet config is intentionally unpopulated in src/arc.ts pending the readiness gate (PLAN.md §6). Testnet values are verified.
 - Automated approval is rejected by the MVP validator; per-action signing only until the M6 automation release.
+- SWAP is gated by `allowSwap` (default off); enabling it is an authority increase (`SWAP_ENABLED`) requiring fresh user approval. Sell notionals are gated in USDC value.

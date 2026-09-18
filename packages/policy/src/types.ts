@@ -21,8 +21,10 @@ export type ApprovalMode = (typeof APPROVAL_MODES)[number];
 export const PAUSE_STATES = ['active', 'paused'] as const;
 export type PauseState = (typeof PAUSE_STATES)[number];
 
-/** The proposed on-chain actions a strategy can emit, each gated by an allow-flag. */
-export const ACTION_TYPES = ['ENTER', 'RANGE_CHANGE', 'COLLECT', 'EXIT'] as const;
+/** The proposed on-chain actions a strategy can emit, each gated by an allow-flag.
+ * SWAP is the Phase-2 trading action (chat swap skill); MVP policies leave it
+ * disabled and enabling it is an authority increase requiring fresh approval. */
+export const ACTION_TYPES = ['ENTER', 'RANGE_CHANGE', 'COLLECT', 'EXIT', 'SWAP'] as const;
 export type ActionType = (typeof ACTION_TYPES)[number];
 
 export interface Policy {
@@ -62,6 +64,8 @@ export interface Policy {
   allowRangeChange: boolean;
   allowFeeCollection: boolean;
   allowExitSwap: boolean;
+  /** Phase-2 swap authority (chat swap skill). MVP default false. */
+  allowSwap: boolean;
 
   pauseState: PauseState;
   userApprovalDigest: string;

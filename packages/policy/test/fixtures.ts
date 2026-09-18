@@ -39,6 +39,7 @@ export function validPolicy(overrides: Partial<Policy> = {}): Policy {
     allowRangeChange: true,
     allowFeeCollection: true,
     allowExitSwap: true,
+    allowSwap: false,
     pauseState: 'active',
     userApprovalDigest: 'digest_abc',
   };

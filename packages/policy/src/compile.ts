@@ -54,6 +54,7 @@ export function compilePermissions(p: Policy): PermissionSet {
       RANGE_CHANGE: p.allowRangeChange,
       COLLECT: p.allowFeeCollection,
       EXIT: p.allowExitSwap,
+      SWAP: p.allowSwap,
     },
   };
 }
@@ -92,8 +93,8 @@ export function checkAction(perm: PermissionSet, a: ProposedAction): Result {
   if (a.priceImpactBps > perm.limits.maxPriceImpactBps) add('IMPACT_EXCEEDED', `price impact ${a.priceImpactBps}bps > max ${perm.limits.maxPriceImpactBps}bps`);
   if (a.gasAtomic > perm.limits.maxGasPerActionAtomic) add('GAS_EXCEEDED', 'gas estimate exceeds maxGasPerAction');
   if (a.notionalAtomic < 0n) add('NOTIONAL_NEGATIVE', 'notional must be >= 0');
-  if (a.type === 'ENTER' && a.notionalAtomic > perm.limits.maxPositionAtomic) {
-    add('POSITION_SIZE_EXCEEDED', 'ENTER notional exceeds maxPosition');
+  if ((a.type === 'ENTER' || a.type === 'SWAP') && a.notionalAtomic > perm.limits.maxPositionAtomic) {
+    add('POSITION_SIZE_EXCEEDED', `${a.type} notional exceeds maxPosition`);
   }
 
   return { ok: v.length === 0, violations: v };

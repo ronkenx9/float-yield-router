@@ -18,8 +18,9 @@ export const HELP_TEXT = [
   'APPROVE <id> / REJECT <id> — decide on a numbered proposal',
   '',
   'SCREEN <filters> — find memecoins by parameters (e.g. SCREEN liq over $50k vol over $5k 200+ holders older than 7 days)',
+  'BUY $50 OF TKN / SELL 10 TKN / SWAP 5 USDC FOR TKN — quote a swap (approval-gated)',
   '',
-  'Coming next: swap and launch from chat.',
+  'Coming next: launch from chat.',
   'I never move money without an APPROVE. Capital at risk.',
 ].join('\n');
 

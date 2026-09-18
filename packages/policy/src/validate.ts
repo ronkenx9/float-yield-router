@@ -129,6 +129,7 @@ export function authorityIncreased(prev: Policy, next: Policy): Result {
   if (next.allowRangeChange && !prev.allowRangeChange) add('RANGE_CHANGE_ENABLED', 'range change enabled');
   if (next.allowFeeCollection && !prev.allowFeeCollection) add('FEE_COLLECTION_ENABLED', 'fee collection enabled');
   if (next.allowExitSwap && !prev.allowExitSwap) add('EXIT_SWAP_ENABLED', 'exit swap enabled');
+  if (next.allowSwap && !prev.allowSwap) add('SWAP_ENABLED', 'swap enabled (trading authority)');
 
   // per_action -> automated is the largest authority jump.
   if (prev.approvalMode === 'per_action' && next.approvalMode === 'automated') add('APPROVAL_MODE_RELAXED', 'switched to automated approval');
